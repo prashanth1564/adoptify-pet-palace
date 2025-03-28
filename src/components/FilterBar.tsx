@@ -33,7 +33,8 @@ const FilterBar = ({ onFilterChange }: FilterBarProps) => {
   };
 
   const clearFilters = () => {
-    const newFilters = { type: 'all', size: 'all' };
+    // Fix: Properly type the new filters object to match FilterState
+    const newFilters: FilterState = { type: 'all', size: 'all' };
     setFilters(newFilters);
     onFilterChange(newFilters);
   };
