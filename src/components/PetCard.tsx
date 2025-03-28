@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Pet } from '@/types/pet';
 import { useFavorites } from '@/context/FavoritesContext';
-import { Heart } from 'lucide-react';
+import { Heart, PawPrint } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PetCardProps {
@@ -60,11 +60,15 @@ const PetCard = ({ pet }: PetCardProps) => {
         </div>
       </div>
       <div className="pet-card-content">
+        <div className="flex items-center gap-1 mb-1">
+          <PawPrint size={16} className="text-pet-purple" />
+          <h4 className="text-sm font-medium text-pet-purple">{pet.breed}</h4>
+        </div>
         <div className="flex justify-between items-start">
           <h3 className="text-lg font-semibold line-clamp-1">{pet.name}</h3>
           <span className="text-sm font-medium text-pet-purple">₹{pet.adoptionFee}</span>
         </div>
-        <p className="text-sm text-muted-foreground line-clamp-1">{pet.breed} • {pet.location}</p>
+        <p className="text-sm text-muted-foreground line-clamp-1">{pet.location}</p>
         <p className="text-sm line-clamp-2 mt-1">{pet.description}</p>
       </div>
     </div>

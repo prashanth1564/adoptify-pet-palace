@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { getPetById } from '@/data/petData';
 import { Pet } from '@/types/pet';
 import { Button } from '@/components/ui/button';
-import { Heart, ArrowLeft, MapPin, Calendar, DollarSign, Tag, Ruler, Info } from 'lucide-react';
+import { Heart, ArrowLeft, MapPin, Calendar, DollarSign, Tag, Ruler, Info, PawPrint, Home } from 'lucide-react';
 import AppHeader from '@/components/AppHeader';
 import { useFavorites } from '@/context/FavoritesContext';
 import { cn } from '@/lib/utils';
@@ -59,6 +59,56 @@ const PetDetails = () => {
     ? `${pet.age} ${pet.age === 1 ? 'month' : 'months'}`
     : `${Math.floor(pet.age / 12)} ${Math.floor(pet.age / 12) === 1 ? 'year' : 'years'}`;
   
+  // Breed information based on pet type
+  const getBreedInfo = () => {
+    switch(pet.breed) {
+      case 'Indian Pariah':
+        return {
+          habitat: 'Versatile, can adapt to both rural and urban environments across India',
+          habits: 'Intelligent, loyal, excellent guard dogs, need moderate exercise, adapt well to family life',
+          origin: 'Native to the Indian subcontinent, one of the oldest dog breeds in the world'
+        };
+      case 'Indian Domestic':
+        return {
+          habitat: 'Highly adaptable to various Indian climates, from Himalayan regions to tropical south',
+          habits: 'Independent, good hunters, playful, generally low-maintenance, need mental stimulation',
+          origin: 'Indigenous to India, evolved naturally over thousands of years'
+        };
+      case 'Indian Ringneck Parrot':
+        return {
+          habitat: 'Native to forests and woodlands of India, particularly in central and southern regions',
+          habits: 'Social, vocal, intelligent, can mimic human speech, need daily interaction and mental stimulation',
+          origin: 'Indigenous to the Indian subcontinent, also found in parts of Africa and Asia'
+        };
+      case 'Mudhol Hound':
+        return {
+          habitat: 'Originally from hot, arid regions of Karnataka and Maharashtra',
+          habits: 'Athletic, needs significant exercise, loyal to owners but reserved with strangers, excellent hunters',
+          origin: 'Originated in the town of Mudhol in Karnataka, traditionally kept by royalty'
+        };
+      case 'Himalayan':
+        return {
+          habitat: 'Adapted to cooler climates, originally from the Himalayan region',
+          habits: 'Calm, gentle, enjoys lounging, needs regular grooming, moderately active',
+          origin: 'Developed by crossing Persian cats with Siamese, popular in northern India'
+        };
+      case 'Indian White':
+        return {
+          habitat: 'Domesticated, can adapt to various Indian climates with proper care',
+          habits: 'Gentle, curious, social animals that need daily interaction, enjoy exploring safe environments',
+          origin: 'Bred throughout India, particularly popular as pets in urban areas'
+        };
+      default:
+        return {
+          habitat: 'Information not available',
+          habits: 'Information not available',
+          origin: 'Information not available'
+        };
+    }
+  };
+  
+  const breedInfo = getBreedInfo();
+  
   return (
     <div className="min-h-screen flex flex-col">
       <AppHeader />
@@ -106,7 +156,10 @@ const PetDetails = () => {
                   </span>
                 </div>
                 <h1 className="text-3xl font-bold">{pet.name}</h1>
-                <p className="text-lg text-muted-foreground">{pet.breed}</p>
+                <div className="flex items-center mt-1">
+                  <PawPrint className="h-5 w-5 text-pet-purple mr-2" />
+                  <p className="text-lg font-medium text-pet-purple">{pet.breed}</p>
+                </div>
               </div>
               
               <div className="grid grid-cols-2 gap-4">
@@ -131,6 +184,30 @@ const PetDetails = () => {
               <div>
                 <h2 className="text-xl font-semibold mb-2">About {pet.name}</h2>
                 <p className="text-muted-foreground">{pet.description}</p>
+              </div>
+              
+              <div className="bg-pet-light-purple/20 p-4 rounded-lg">
+                <h2 className="text-xl font-semibold mb-3 text-pet-dark-purple">Breed Information</h2>
+                <div className="space-y-3">
+                  <div>
+                    <h3 className="font-medium flex items-center text-pet-purple">
+                      <Home className="mr-2 h-4 w-4" /> Natural Habitat
+                    </h3>
+                    <p className="text-sm text-muted-foreground ml-6">{breedInfo.habitat}</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium flex items-center text-pet-purple">
+                      <Tag className="mr-2 h-4 w-4" /> Common Habits
+                    </h3>
+                    <p className="text-sm text-muted-foreground ml-6">{breedInfo.habits}</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium flex items-center text-pet-purple">
+                      <Info className="mr-2 h-4 w-4" /> Origin
+                    </h3>
+                    <p className="text-sm text-muted-foreground ml-6">{breedInfo.origin}</p>
+                  </div>
+                </div>
               </div>
               
               <div>
