@@ -124,7 +124,7 @@ const PetDetails = () => {
                 </div>
                 <div className="flex items-center">
                   <DollarSign className="mr-2 h-5 w-5 text-pet-purple" />
-                  <span>Adoption Fee: ${pet.adoptionFee}</span>
+                  <span>Adoption Fee: ₹{pet.adoptionFee}</span>
                 </div>
               </div>
               
@@ -174,12 +174,12 @@ const PetDetails = () => {
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
-              <div className="text-xl font-bold text-pet-purple">Adoptify</div>
-              <div className="text-sm text-muted-foreground">Connecting pets with their forever homes</div>
+              <div className="text-xl font-bold text-pet-purple">Adoptify India</div>
+              <div className="text-sm text-muted-foreground">Connecting pets with loving homes across India</div>
             </div>
             
             <div className="text-sm text-muted-foreground">
-              © 2023 Adoptify. All rights reserved.
+              © 2023 Adoptify India. All rights reserved.
             </div>
           </div>
         </div>

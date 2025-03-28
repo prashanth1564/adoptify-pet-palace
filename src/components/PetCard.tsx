@@ -62,7 +62,7 @@ const PetCard = ({ pet }: PetCardProps) => {
       <div className="pet-card-content">
         <div className="flex justify-between items-start">
           <h3 className="text-lg font-semibold line-clamp-1">{pet.name}</h3>
-          <span className="text-sm font-medium text-pet-purple">${pet.adoptionFee}</span>
+          <span className="text-sm font-medium text-pet-purple">₹{pet.adoptionFee}</span>
         </div>
         <p className="text-sm text-muted-foreground line-clamp-1">{pet.breed} • {pet.location}</p>
         <p className="text-sm line-clamp-2 mt-1">{pet.description}</p>

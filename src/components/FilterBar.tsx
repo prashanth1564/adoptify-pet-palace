@@ -67,7 +67,7 @@ const FilterBar = ({ onFilterChange }: FilterBarProps) => {
               )}
               onClick={() => handleTypeChange('dog')}
             >
-              <Dog className="mr-1 h-4 w-4" /> Dogs
+              <Dog className="mr-1 h-4 w-4" /> Indian Dogs
             </Button>
             <Button
               variant="outline"
@@ -78,7 +78,7 @@ const FilterBar = ({ onFilterChange }: FilterBarProps) => {
               )}
               onClick={() => handleTypeChange('cat')}
             >
-              <Cat className="mr-1 h-4 w-4" /> Cats
+              <Cat className="mr-1 h-4 w-4" /> Indian Cats
             </Button>
             <Button
               variant="outline"
