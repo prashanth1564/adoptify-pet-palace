@@ -8,7 +8,7 @@ import { Heart, ArrowLeft, MapPin, Calendar, DollarSign, Tag, Ruler, Info } from
 import AppHeader from '@/components/AppHeader';
 import { useFavorites } from '@/context/FavoritesContext';
 import { cn } from '@/lib/utils';
-import { toast } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 
 const PetDetails = () => {
   const { id } = useParams<{ id: string }>();
