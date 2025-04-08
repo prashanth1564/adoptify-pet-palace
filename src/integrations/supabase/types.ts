@@ -9,7 +9,146 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      adoption_requests: {
+        Row: {
+          contact_email: string
+          contact_phone: string | null
+          created_at: string
+          id: string
+          message: string | null
+          owner_id: string
+          pet_id: string
+          requester_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          contact_email: string
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          message?: string | null
+          owner_id: string
+          pet_id: string
+          requester_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          contact_email?: string
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          message?: string | null
+          owner_id?: string
+          pet_id?: string
+          requester_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "adoption_requests_pet_id_fkey"
+            columns: ["pet_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pets: {
+        Row: {
+          adoption_fee: number | null
+          age: number
+          breed: string
+          color: string
+          date_added: string
+          description: string
+          gender: string
+          good_with: string[] | null
+          habitat: string | null
+          habits: string | null
+          id: string
+          image_url: string | null
+          location: string
+          medical_info: string | null
+          name: string
+          origin: string | null
+          size: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          adoption_fee?: number | null
+          age: number
+          breed: string
+          color: string
+          date_added?: string
+          description: string
+          gender: string
+          good_with?: string[] | null
+          habitat?: string | null
+          habits?: string | null
+          id?: string
+          image_url?: string | null
+          location: string
+          medical_info?: string | null
+          name: string
+          origin?: string | null
+          size: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          adoption_fee?: number | null
+          age?: number
+          breed?: string
+          color?: string
+          date_added?: string
+          description?: string
+          gender?: string
+          good_with?: string[] | null
+          habitat?: string | null
+          habits?: string | null
+          id?: string
+          image_url?: string | null
+          location?: string
+          medical_info?: string | null
+          name?: string
+          origin?: string | null
+          size?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          contact_email: string | null
+          contact_phone: string | null
+          created_at: string
+          id: string
+          location: string | null
+          name: string | null
+        }
+        Insert: {
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          id: string
+          location?: string | null
+          name?: string | null
+        }
+        Update: {
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          location?: string | null
+          name?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

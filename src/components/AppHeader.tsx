@@ -1,15 +1,23 @@
 
-import { Link, useLocation } from 'react-router-dom';
-import { Heart, Menu, Search, X } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Heart, Menu, Search, X, PlusCircle, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useFavorites } from '@/context/FavoritesContext';
+import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
 
 const AppHeader = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { favorites } = useFavorites();
+  const { user, signOut } = useAuth();
+  
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
   
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -17,6 +25,15 @@ const AppHeader = () => {
     { name: 'Favorites', path: '/favorites' },
     { name: 'About', path: '/about' },
   ];
+
+  // Add authenticated user links
+  const authLinks = user ? [
+    { name: 'List a Pet', path: '/list-pet' },
+    { name: 'My Pets', path: '/my-pets' },
+  ] : [];
+
+  // Combine both sets of links
+  const allLinks = [...navLinks, ...authLinks];
 
   const isActive = (path: string) => {
     if (path === '/' && location.pathname === '/') return true;
@@ -34,7 +51,7 @@ const AppHeader = () => {
         </Link>
         
         <nav className="hidden md:flex gap-6">
-          {navLinks.map(link => (
+          {allLinks.map(link => (
             <Link
               key={link.name}
               to={link.path}
@@ -56,7 +73,7 @@ const AppHeader = () => {
         </nav>
         
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="outline" size="icon">
+          <Button variant="outline" size="icon" onClick={() => navigate('/pets')}>
             <Search className="h-4 w-4" />
           </Button>
           <Link to="/favorites">
@@ -69,9 +86,23 @@ const AppHeader = () => {
               )}
             </Button>
           </Link>
-          <Link to="/adopt">
-            <Button>Adopt Now</Button>
-          </Link>
+          
+          {user ? (
+            <>
+              <Button onClick={() => navigate('/list-pet')} variant="outline" size="sm">
+                <PlusCircle className="h-4 w-4 mr-2" />
+                List a Pet
+              </Button>
+              <Button onClick={handleSignOut} variant="outline" size="icon">
+                <LogOut className="h-4 w-4" />
+              </Button>
+            </>
+          ) : (
+            <Button onClick={() => navigate('/auth')}>
+              <User className="h-4 w-4 mr-2" />
+              Sign In
+            </Button>
+          )}
         </div>
         
         <button 
@@ -85,7 +116,7 @@ const AppHeader = () => {
       {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="md:hidden py-4 px-6 space-y-4 border-b bg-background">
-          {navLinks.map(link => (
+          {allLinks.map(link => (
             <Link
               key={link.name}
               to={link.path}
@@ -104,13 +135,26 @@ const AppHeader = () => {
             </Link>
           ))}
           <div className="pt-4 flex gap-4 border-t">
-            <Button variant="outline" size="sm" className="flex-1">
-              <Search className="h-4 w-4 mr-2" />
-              Search
-            </Button>
-            <Link to="/adopt" className="flex-1">
-              <Button size="sm" className="w-full">Adopt Now</Button>
-            </Link>
+            {user ? (
+              <>
+                <Button variant="outline" size="sm" className="flex-1" onClick={handleSignOut}>
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <Button 
+                size="sm" 
+                className="w-full" 
+                onClick={() => {
+                  navigate('/auth');
+                  setMobileMenuOpen(false);
+                }}
+              >
+                <User className="h-4 w-4 mr-2" />
+                Sign In
+              </Button>
+            )}
           </div>
         </div>
       )}
