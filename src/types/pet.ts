@@ -7,6 +7,7 @@ export type PetGender = 'male' | 'female';
 
 export interface Pet {
   id: string;
+  user_id: string;
   name: string;
   type: PetType;
   breed: string;
@@ -15,10 +16,13 @@ export interface Pet {
   gender: PetGender;
   color: string;
   description: string;
-  imageUrl: string;
+  image_url: string;
   location: string;
-  goodWith: string[];
-  medicalInfo: string;
-  adoptionFee: number;
-  dateAdded: string;
+  good_with: string[];
+  medical_info: string | null;
+  adoption_fee: number | null;
+  date_added: string;
+  habitat: string | null;
+  habits: string | null;
+  origin: string | null;
 }

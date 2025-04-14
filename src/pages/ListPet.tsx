@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
@@ -141,7 +140,7 @@ const ListPet = () => {
       }
 
       toast.success('Pet listed successfully! 🐾');
-      navigate(`/pets/${pet.id}`);
+      navigate(`/pets/${pet!.id}`);
 
     } catch (error: any) {
       toast.error(`Failed to list pet: ${error.message}`);
