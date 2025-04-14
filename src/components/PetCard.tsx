@@ -34,7 +34,7 @@ const PetCard = ({ pet }: PetCardProps) => {
     >
       <div className="relative overflow-hidden rounded-t-2xl">
         <img
-          src={pet.imageUrl}
+          src={pet.image_url}
           alt={pet.name}
           className="pet-card-image group-hover:scale-105 transition-transform duration-300"
         />
@@ -66,7 +66,7 @@ const PetCard = ({ pet }: PetCardProps) => {
         </div>
         <div className="flex justify-between items-start">
           <h3 className="text-lg font-semibold line-clamp-1">{pet.name}</h3>
-          <span className="text-sm font-medium text-pet-purple">₹{pet.adoptionFee}</span>
+          <span className="text-sm font-medium text-pet-purple">₹{pet.adoption_fee}</span>
         </div>
         <p className="text-sm text-muted-foreground line-clamp-1">{pet.location}</p>
         <p className="text-sm line-clamp-2 mt-1">{pet.description}</p>

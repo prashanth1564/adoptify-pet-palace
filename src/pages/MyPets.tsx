@@ -27,9 +27,9 @@ interface AdoptionRequest {
   updated_at: string;
   pet: Pet;
   requester_profile: {
-    name: string;
-    contact_email: string;
-    location: string;
+    name: string | null;
+    contact_email: string | null;
+    location: string | null;
   } | null;
 }
 
@@ -68,7 +68,7 @@ const MyPets = () => {
           
         if (receivedError) throw receivedError;
         
-        setRequestsReceived(receivedData as AdoptionRequest[]);
+        setRequestsReceived(receivedData as unknown as AdoptionRequest[]);
         
         // Fetch adoption requests sent by the user
         const { data: sentData, error: sentError } = await supabase
@@ -81,7 +81,7 @@ const MyPets = () => {
           
         if (sentError) throw sentError;
         
-        setRequestsSent(sentData as AdoptionRequest[]);
+        setRequestsSent(sentData as unknown as AdoptionRequest[]);
         
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -283,9 +283,10 @@ const MyPets = () => {
                                 {request.status === 'pending' && (
                                   <>
                                     <Button
-                                      variant="success"
+                                      variant="default"
                                       size="sm"
                                       onClick={() => handleApproveRequest(request.id)}
+                                      className="bg-green-500 hover:bg-green-600"
                                     >
                                       <Check className="h-4 w-4" />
                                     </Button>
