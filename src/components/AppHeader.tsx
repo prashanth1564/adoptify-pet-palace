@@ -1,4 +1,3 @@
-
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Heart, Menu, Search, X, PlusCircle, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -26,13 +25,12 @@ const AppHeader = () => {
     { name: 'About', path: '/about' },
   ];
 
-  // Add authenticated user links
   const authLinks = user ? [
     { name: 'List a Pet', path: '/list-pet' },
     { name: 'My Pets', path: '/my-pets' },
+    { name: 'Profile', path: '/profile' },
   ] : [];
 
-  // Combine both sets of links
   const allLinks = [...navLinks, ...authLinks];
 
   const isActive = (path: string) => {
@@ -113,7 +111,6 @@ const AppHeader = () => {
         </button>
       </div>
       
-      {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="md:hidden py-4 px-6 space-y-4 border-b bg-background">
           {allLinks.map(link => (

@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,6 +16,7 @@ import AdoptionForm from "./pages/AdoptionForm";
 import ListPet from "./pages/ListPet";
 import MyPets from "./pages/MyPets";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -38,7 +38,7 @@ const App = () => (
               <Route path="/adopt/:id" element={<AdoptionForm />} />
               <Route path="/list-pet" element={<ProtectedRoute><ListPet /></ProtectedRoute>} />
               <Route path="/my-pets" element={<ProtectedRoute><MyPets /></ProtectedRoute>} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
