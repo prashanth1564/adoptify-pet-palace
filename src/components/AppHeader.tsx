@@ -1,5 +1,6 @@
+
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Heart, Menu, Search, X, PlusCircle, User, LogOut } from 'lucide-react';
+import { Menu, X, PlusCircle, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useFavorites } from '@/context/FavoritesContext';
@@ -61,30 +62,11 @@ const AppHeader = () => {
               )}
             >
               {link.name}
-              {link.path === '/favorites' && favorites.length > 0 && (
-                <span className="absolute -top-2 -right-4 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white">
-                  {favorites.length}
-                </span>
-              )}
             </Link>
           ))}
         </nav>
         
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="outline" size="icon" onClick={() => navigate('/pets')}>
-            <Search className="h-4 w-4" />
-          </Button>
-          <Link to="/favorites">
-            <Button variant="outline" size="icon" className="relative">
-              <Heart className="h-4 w-4" />
-              {favorites.length > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-white">
-                  {favorites.length}
-                </span>
-              )}
-            </Button>
-          </Link>
-          
           {user ? (
             <>
               <Button onClick={() => navigate('/list-pet')} variant="outline" size="sm">
@@ -124,11 +106,6 @@ const AppHeader = () => {
               onClick={() => setMobileMenuOpen(false)}
             >
               {link.name}
-              {link.path === '/favorites' && favorites.length > 0 && (
-                <span className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white">
-                  {favorites.length}
-                </span>
-              )}
             </Link>
           ))}
           <div className="pt-4 flex gap-4 border-t">
