@@ -3,15 +3,44 @@ import { useState, useEffect } from 'react';
 import AppHeader from '@/components/AppHeader';
 import FilterBar, { FilterState } from '@/components/FilterBar';
 import PetGrid from '@/components/PetGrid';
-import { getPets } from '@/data/petData';
 import { Pet } from '@/types/pet';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 const Pets = () => {
-  const [pets, setPets] = useState<Pet[]>(getPets());
-  const [filteredPets, setFilteredPets] = useState<Pet[]>(pets);
+  const [pets, setPets] = useState<Pet[]>([]);
+  const [filteredPets, setFilteredPets] = useState<Pet[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        setIsLoading(true);
+        const { data, error } = await supabase
+          .from('pets')
+          .select('*');
+        
+        if (error) {
+          throw error;
+        }
+        
+        if (data) {
+          setPets(data as Pet[]);
+          setFilteredPets(data as Pet[]);
+        }
+      } catch (error: any) {
+        console.error('Error fetching pets:', error);
+        toast.error(error.message || 'Failed to load pets');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchPets();
+  }, []);
   
   const handleFilterChange = (filters: FilterState) => {
     const filtered = pets.filter(pet => {
@@ -86,10 +115,16 @@ const Pets = () => {
             Showing {filteredPets.length} pets across India
           </div>
           
-          <PetGrid 
-            pets={filteredPets} 
-            emptyMessage="No pets match your search. Try adjusting your filters or check back later for more Indian pets."
-          />
+          {isLoading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pet-purple"></div>
+            </div>
+          ) : (
+            <PetGrid 
+              pets={filteredPets} 
+              emptyMessage="No pets match your search. Try adjusting your filters or check back later for more Indian pets."
+            />
+          )}
         </div>
       </main>
       
