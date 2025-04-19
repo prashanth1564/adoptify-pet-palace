@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -6,32 +5,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import AppHeader from '@/components/AppHeader';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Pet } from '@/types/pet';
-import PetGrid from '@/components/PetGrid';
 import { Badge } from '@/components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Check, X, ExternalLink, PlusCircle, Mail, Phone } from 'lucide-react';
-
-interface AdoptionRequest {
-  id: string;
-  pet_id: string;
-  requester_id: string;
-  owner_id: string;
-  status: string;
-  message: string;
-  contact_email: string;
-  contact_phone: string | null;
-  created_at: string;
-  updated_at: string;
-  pet: Pet;
-  requester_profile: {
-    name: string | null;
-    contact_email: string | null;
-    location: string | null;
-  } | null;
-}
+import { Pet } from '@/types/pet';
+import { AdoptionRequest } from '@/types/adoptionRequest';
+import { PlusCircle } from 'lucide-react';
+import PetGrid from '@/components/PetGrid';
+import EmptyStateCard from '@/components/EmptyStateCard';
+import AdoptionRequestsTable from '@/components/AdoptionRequestsTable';
 
 const MyPets = () => {
   const [myPets, setMyPets] = useState<Pet[]>([]);
@@ -183,20 +164,12 @@ const MyPets = () => {
             
             <TabsContent value="my-pets">
               {myPets.length === 0 ? (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>No Pets Listed Yet</CardTitle>
-                    <CardDescription>
-                      You haven't listed any pets for adoption yet
-                    </CardDescription>
-                  </CardHeader>
-                  <CardFooter>
-                    <Button onClick={() => navigate('/list-pet')}>
-                      <PlusCircle className="mr-2 h-4 w-4" />
-                      List Your First Pet
-                    </Button>
-                  </CardFooter>
-                </Card>
+                <EmptyStateCard
+                  title="No Pets Listed Yet"
+                  description="You haven't listed any pets for adoption yet"
+                  actionLabel="List Your First Pet"
+                  onAction={() => navigate('/list-pet')}
+                />
               ) : (
                 <PetGrid pets={myPets} />
               )}
@@ -204,196 +177,38 @@ const MyPets = () => {
             
             <TabsContent value="requests-received">
               {requestsReceived.length === 0 ? (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>No Adoption Requests</CardTitle>
-                    <CardDescription>
-                      You haven't received any adoption requests for your pets yet
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+                <EmptyStateCard
+                  title="No Adoption Requests"
+                  description="You haven't received any adoption requests for your pets yet"
+                />
               ) : (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Adoption Requests for Your Pets</CardTitle>
-                    <CardDescription>
-                      Review and manage requests from people who want to adopt your pets
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Pet</TableHead>
-                          <TableHead>From</TableHead>
-                          <TableHead>Status</TableHead>
-                          <TableHead>Date</TableHead>
-                          <TableHead>Actions</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {requestsReceived.map(request => (
-                          <TableRow key={request.id}>
-                            <TableCell className="font-medium">
-                              <div className="flex items-center space-x-3">
-                                <img 
-                                  src={request.pet.image_url || ''} 
-                                  alt={request.pet.name}
-                                  className="w-10 h-10 rounded-md object-cover"
-                                />
-                                <div>
-                                  <div>{request.pet.name}</div>
-                                  <div className="text-sm text-muted-foreground">{request.pet.breed}</div>
-                                </div>
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              <div>
-                                <div>{request.requester_profile?.name || 'Unknown User'}</div>
-                                <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                                  <Mail className="h-3 w-3" />
-                                  {request.contact_email}
-                                </div>
-                                {request.contact_phone && (
-                                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                                    <Phone className="h-3 w-3" />
-                                    {request.contact_phone}
-                                  </div>
-                                )}
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              <Badge 
-                                variant={
-                                  request.status === 'approved' ? 'success' :
-                                  request.status === 'rejected' ? 'destructive' :
-                                  'default'
-                                }
-                              >
-                                {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              {new Date(request.created_at).toLocaleDateString()}
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex space-x-2">
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => navigate(`/pets/${request.pet_id}`)}
-                                >
-                                  <ExternalLink className="h-4 w-4" />
-                                </Button>
-                                
-                                {request.status === 'pending' && (
-                                  <>
-                                    <Button
-                                      variant="default"
-                                      size="sm"
-                                      onClick={() => handleApproveRequest(request.id)}
-                                      className="bg-green-500 hover:bg-green-600"
-                                    >
-                                      <Check className="h-4 w-4" />
-                                    </Button>
-                                    <Button
-                                      variant="destructive"
-                                      size="sm"
-                                      onClick={() => handleRejectRequest(request.id)}
-                                    >
-                                      <X className="h-4 w-4" />
-                                    </Button>
-                                  </>
-                                )}
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                </Card>
+                <AdoptionRequestsTable
+                  title="Adoption Requests for Your Pets"
+                  description="Review and manage requests from people who want to adopt your pets"
+                  requests={requestsReceived}
+                  showRequesterInfo={true}
+                  onApprove={handleApproveRequest}
+                  onReject={handleRejectRequest}
+                  onViewPet={(petId) => navigate(`/pets/${petId}`)}
+                />
               )}
             </TabsContent>
             
             <TabsContent value="requests-sent">
               {requestsSent.length === 0 ? (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>No Adoption Requests</CardTitle>
-                    <CardDescription>
-                      You haven't made any adoption requests yet
-                    </CardDescription>
-                  </CardHeader>
-                  <CardFooter>
-                    <Button onClick={() => navigate('/pets')}>
-                      Browse Pets for Adoption
-                    </Button>
-                  </CardFooter>
-                </Card>
+                <EmptyStateCard
+                  title="No Adoption Requests"
+                  description="You haven't made any adoption requests yet"
+                  actionLabel="Browse Pets for Adoption"
+                  onAction={() => navigate('/pets')}
+                />
               ) : (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Your Adoption Requests</CardTitle>
-                    <CardDescription>
-                      Check the status of your requests to adopt pets
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Pet</TableHead>
-                          <TableHead>Status</TableHead>
-                          <TableHead>Submitted On</TableHead>
-                          <TableHead>Actions</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {requestsSent.map(request => (
-                          <TableRow key={request.id}>
-                            <TableCell className="font-medium">
-                              <div className="flex items-center space-x-3">
-                                <img 
-                                  src={request.pet.image_url || ''} 
-                                  alt={request.pet.name}
-                                  className="w-10 h-10 rounded-md object-cover"
-                                />
-                                <div>
-                                  <div>{request.pet.name}</div>
-                                  <div className="text-sm text-muted-foreground">{request.pet.breed}</div>
-                                </div>
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              <Badge 
-                                variant={
-                                  request.status === 'approved' ? 'success' :
-                                  request.status === 'rejected' ? 'destructive' :
-                                  'default'
-                                }
-                              >
-                                {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              {new Date(request.created_at).toLocaleDateString()}
-                            </TableCell>
-                            <TableCell>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => navigate(`/pets/${request.pet_id}`)}
-                              >
-                                View Pet
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                </Card>
+                <AdoptionRequestsTable
+                  title="Your Adoption Requests"
+                  description="Check the status of your requests to adopt pets"
+                  requests={requestsSent}
+                  onViewPet={(petId) => navigate(`/pets/${petId}`)}
+                />
               )}
             </TabsContent>
           </Tabs>
