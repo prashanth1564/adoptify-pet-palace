@@ -2,20 +2,48 @@
 import { useEffect, useState } from 'react';
 import AppHeader from '@/components/AppHeader';
 import { useFavorites } from '@/context/FavoritesContext';
-import { getPetById } from '@/data/petData';
 import { Pet } from '@/types/pet';
 import PetGrid from '@/components/PetGrid';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 const Favorites = () => {
   const { favorites } = useFavorites();
   const [favoritePets, setFavoritePets] = useState<Pet[]>([]);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    const pets = favorites.map(id => getPetById(id)).filter(pet => pet !== undefined) as Pet[];
-    setFavoritePets(pets);
+    const fetchFavoritePets = async () => {
+      if (favorites.length === 0) {
+        setFavoritePets([]);
+        setLoading(false);
+        return;
+      }
+      
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('pets')
+          .select('*')
+          .in('id', favorites);
+        
+        if (error) {
+          throw error;
+        }
+        
+        if (data) {
+          setFavoritePets(data as Pet[]);
+        }
+      } catch (error) {
+        console.error('Error fetching favorite pets:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchFavoritePets();
   }, [favorites]);
   
   return (
@@ -31,7 +59,11 @@ const Favorites = () => {
             </p>
           </div>
           
-          {favoritePets.length > 0 ? (
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pet-purple"></div>
+            </div>
+          ) : favoritePets.length > 0 ? (
             <PetGrid pets={favoritePets} />
           ) : (
             <div className="text-center py-16 bg-secondary rounded-2xl">
