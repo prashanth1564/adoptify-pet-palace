@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -8,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
+import { LogOut } from 'lucide-react';
 
 interface ProfileData {
   name: string;
@@ -17,7 +17,7 @@ interface ProfileData {
 }
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -65,6 +65,11 @@ const Profile = () => {
     }));
   };
 
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -102,9 +107,18 @@ const Profile = () => {
             <div className="flex justify-between items-center">
               <h1 className="text-2xl font-bold">My Profile</h1>
               {!isEditing && (
-                <Button onClick={() => setIsEditing(true)} variant="outline">
-                  Edit Profile
-                </Button>
+                <div className="space-x-4">
+                  <Button onClick={() => setIsEditing(true)} variant="outline">
+                    Edit Profile
+                  </Button>
+                  <Button 
+                    onClick={handleSignOut} 
+                    variant="destructive"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sign Out
+                  </Button>
+                </div>
               )}
             </div>
           </CardHeader>

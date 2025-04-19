@@ -1,9 +1,8 @@
 
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, PlusCircle, User, LogOut } from 'lucide-react';
+import { Menu, X, PlusCircle, UserRound } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { useFavorites } from '@/context/FavoritesContext';
 import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
 
@@ -11,25 +10,17 @@ const AppHeader = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { favorites } = useFavorites();
-  const { user, signOut } = useAuth();
-  
-  const handleSignOut = async () => {
-    await signOut();
-    navigate('/');
-  };
+  const { user } = useAuth();
   
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Pets', path: '/pets' },
-    { name: 'Favorites', path: '/favorites' },
     { name: 'About', path: '/about' },
   ];
 
   const authLinks = user ? [
     { name: 'List a Pet', path: '/list-pet' },
     { name: 'My Pets', path: '/my-pets' },
-    { name: 'Profile', path: '/profile' },
   ] : [];
 
   const allLinks = [...navLinks, ...authLinks];
@@ -68,18 +59,16 @@ const AppHeader = () => {
         
         <div className="hidden md:flex items-center gap-4">
           {user ? (
-            <>
-              <Button onClick={() => navigate('/list-pet')} variant="outline" size="sm">
-                <PlusCircle className="h-4 w-4 mr-2" />
-                List a Pet
-              </Button>
-              <Button onClick={handleSignOut} variant="outline" size="icon">
-                <LogOut className="h-4 w-4" />
-              </Button>
-            </>
+            <Button 
+              onClick={() => navigate('/profile')} 
+              variant="ghost" 
+              size="icon"
+              className="ml-auto"
+            >
+              <UserRound className="h-5 w-5" />
+            </Button>
           ) : (
             <Button onClick={() => navigate('/auth')}>
-              <User className="h-4 w-4 mr-2" />
               Sign In
             </Button>
           )}
@@ -110,12 +99,18 @@ const AppHeader = () => {
           ))}
           <div className="pt-4 flex gap-4 border-t">
             {user ? (
-              <>
-                <Button variant="outline" size="sm" className="flex-1" onClick={handleSignOut}>
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Sign Out
-                </Button>
-              </>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full"
+                onClick={() => {
+                  navigate('/profile');
+                  setMobileMenuOpen(false);
+                }}
+              >
+                <UserRound className="h-4 w-4 mr-2" />
+                Profile
+              </Button>
             ) : (
               <Button 
                 size="sm" 
@@ -125,7 +120,6 @@ const AppHeader = () => {
                   setMobileMenuOpen(false);
                 }}
               >
-                <User className="h-4 w-4 mr-2" />
                 Sign In
               </Button>
             )}

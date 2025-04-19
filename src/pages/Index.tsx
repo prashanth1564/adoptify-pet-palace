@@ -1,14 +1,38 @@
-
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Heart, Search, ArrowRight, PawPrint } from 'lucide-react';
 import AppHeader from '@/components/AppHeader';
 import PetGrid from '@/components/PetGrid';
-import { getRecentPets } from '@/data/petData';
+import { supabase } from '@/integrations/supabase/client';
+import { Pet } from '@/types/pet';
+import { toast } from 'sonner';
 
 const Index = () => {
-  const recentPets = getRecentPets(4);
+  const [recentPets, setRecentPets] = useState<Pet[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRecentPets = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('pets')
+          .select('*')
+          .order('date_added', { ascending: false })
+          .limit(4);
+
+        if (error) throw error;
+        setRecentPets(data || []);
+      } catch (error: any) {
+        console.error('Error fetching recent pets:', error);
+        toast.error(error.message || 'Failed to load recent pets');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchRecentPets();
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -79,7 +103,13 @@ const Index = () => {
               </Link>
             </div>
             
-            <PetGrid pets={recentPets} />
+            {isLoading ? (
+              <div className="flex justify-center items-center h-64">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pet-purple"></div>
+              </div>
+            ) : (
+              <PetGrid pets={recentPets} />
+            )}
           </div>
         </section>
         
