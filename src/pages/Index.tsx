@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -5,7 +6,7 @@ import { Heart, Search, ArrowRight, PawPrint } from 'lucide-react';
 import AppHeader from '@/components/AppHeader';
 import PetGrid from '@/components/PetGrid';
 import { supabase } from '@/integrations/supabase/client';
-import { Pet } from '@/types/pet';
+import { Pet, PetType } from '@/types/pet';
 import { toast } from 'sonner';
 
 const Index = () => {
@@ -22,7 +23,14 @@ const Index = () => {
           .limit(4);
 
         if (error) throw error;
-        setRecentPets(data || []);
+        
+        // Type casting the data from Supabase to match the Pet interface
+        const typedPets = data?.map(pet => ({
+          ...pet,
+          type: pet.type as PetType // Cast the string type to PetType enum
+        })) || [];
+        
+        setRecentPets(typedPets);
       } catch (error: any) {
         console.error('Error fetching recent pets:', error);
         toast.error(error.message || 'Failed to load recent pets');
