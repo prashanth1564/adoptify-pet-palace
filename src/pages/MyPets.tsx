@@ -12,7 +12,7 @@ import { Pet } from '@/types/pet';
 import PetGrid from '@/components/PetGrid';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Check, X, ExternalLink, PlusCircle } from 'lucide-react';
+import { Check, X, ExternalLink, PlusCircle, Mail, Phone } from 'lucide-react';
 
 interface AdoptionRequest {
   id: string;
@@ -61,8 +61,8 @@ const MyPets = () => {
           .from('adoption_requests')
           .select(`
             *,
-            pet:pet_id(*),
-            requester_profile:requester_id(name, contact_email, location)
+            pet:pets(*),
+            requester_profile:profiles!adoption_requests_requester_id_fkey(name, contact_email, location)
           `)
           .eq('owner_id', user.id);
           
@@ -75,7 +75,7 @@ const MyPets = () => {
           .from('adoption_requests')
           .select(`
             *,
-            pet:pet_id(*)
+            pet:pets(*)
           `)
           .eq('requester_id', user.id);
           
@@ -171,7 +171,7 @@ const MyPets = () => {
             <TabsList className="grid w-full grid-cols-3 mb-8">
               <TabsTrigger value="my-pets">My Listed Pets</TabsTrigger>
               <TabsTrigger value="requests-received">
-                Adoption Requests Received 
+                Requests Received
                 {requestsReceived.filter(r => r.status === 'pending').length > 0 && (
                   <Badge variant="secondary" className="ml-2">
                     {requestsReceived.filter(r => r.status === 'pending').length}
@@ -181,7 +181,7 @@ const MyPets = () => {
               <TabsTrigger value="requests-sent">My Adoption Requests</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="my-pets" className="space-y-6">
+            <TabsContent value="my-pets">
               {myPets.length === 0 ? (
                 <Card>
                   <CardHeader>
@@ -237,7 +237,7 @@ const MyPets = () => {
                             <TableCell className="font-medium">
                               <div className="flex items-center space-x-3">
                                 <img 
-                                  src={request.pet.image_url} 
+                                  src={request.pet.image_url || ''} 
                                   alt={request.pet.name}
                                   className="w-10 h-10 rounded-md object-cover"
                                 />
@@ -250,9 +250,15 @@ const MyPets = () => {
                             <TableCell>
                               <div>
                                 <div>{request.requester_profile?.name || 'Unknown User'}</div>
-                                <div className="text-sm text-muted-foreground">{request.contact_email}</div>
+                                <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                  <Mail className="h-3 w-3" />
+                                  {request.contact_email}
+                                </div>
                                 {request.contact_phone && (
-                                  <div className="text-sm text-muted-foreground">{request.contact_phone}</div>
+                                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                    <Phone className="h-3 w-3" />
+                                    {request.contact_phone}
+                                  </div>
                                 )}
                               </div>
                             </TableCell>
@@ -349,7 +355,7 @@ const MyPets = () => {
                             <TableCell className="font-medium">
                               <div className="flex items-center space-x-3">
                                 <img 
-                                  src={request.pet.image_url} 
+                                  src={request.pet.image_url || ''} 
                                   alt={request.pet.name}
                                   className="w-10 h-10 rounded-md object-cover"
                                 />
