@@ -1,6 +1,6 @@
 
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, PlusCircle, UserRound } from 'lucide-react';
+import { Menu, X, Heart, UserRound } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
@@ -15,6 +15,7 @@ const AppHeader = () => {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Pets', path: '/pets' },
+    { name: 'Favorites', path: '/favorites', icon: Heart },
     { name: 'About', path: '/about' },
   ];
 
@@ -46,12 +47,13 @@ const AppHeader = () => {
               key={link.name}
               to={link.path}
               className={cn(
-                "relative text-sm font-medium transition-colors hover:text-primary",
+                "relative text-sm font-medium transition-colors hover:text-primary flex items-center gap-2",
                 isActive(link.path) 
                   ? "text-foreground after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary"
                   : "text-muted-foreground"
               )}
             >
+              {link.icon && <link.icon className="h-4 w-4" />}
               {link.name}
             </Link>
           ))}
@@ -89,11 +91,12 @@ const AppHeader = () => {
               key={link.name}
               to={link.path}
               className={cn(
-                "block py-2 text-sm font-medium",
+                "block py-2 text-sm font-medium flex items-center gap-2",
                 isActive(link.path) ? "text-primary" : "text-muted-foreground"
               )}
               onClick={() => setMobileMenuOpen(false)}
             >
+              {link.icon && <link.icon className="h-4 w-4" />}
               {link.name}
             </Link>
           ))}
