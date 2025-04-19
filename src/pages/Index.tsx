@@ -6,7 +6,7 @@ import { Heart, Search, ArrowRight, PawPrint } from 'lucide-react';
 import AppHeader from '@/components/AppHeader';
 import PetGrid from '@/components/PetGrid';
 import { supabase } from '@/integrations/supabase/client';
-import { Pet, PetType } from '@/types/pet';
+import { Pet, PetType, PetSize, PetGender } from '@/types/pet';
 import { toast } from 'sonner';
 
 const Index = () => {
@@ -24,11 +24,19 @@ const Index = () => {
 
         if (error) throw error;
         
-        // Type casting the data from Supabase to match the Pet interface
+        // Transform and type cast the data from Supabase to match the Pet interface
         const typedPets = data?.map(pet => ({
           ...pet,
-          type: pet.type as PetType // Cast the string type to PetType enum
-        })) || [];
+          type: pet.type as PetType,
+          size: pet.size as PetSize,
+          gender: pet.gender as PetGender,
+          good_with: pet.good_with || [],
+          habitat: pet.habitat || null,
+          habits: pet.habits || null,
+          origin: pet.origin || null,
+          medical_info: pet.medical_info || null,
+          adoption_fee: pet.adoption_fee || null
+        })) as Pet[];
         
         setRecentPets(typedPets);
       } catch (error: any) {

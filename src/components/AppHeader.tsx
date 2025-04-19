@@ -12,14 +12,21 @@ const AppHeader = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   
-  const navLinks = [
+  // Explicitly type the navLinks array to include the optional icon property
+  type NavLink = {
+    name: string;
+    path: string;
+    icon?: React.ComponentType<any>;
+  };
+  
+  const navLinks: NavLink[] = [
     { name: 'Home', path: '/' },
     { name: 'Pets', path: '/pets' },
     { name: 'Favorites', path: '/favorites', icon: Heart },
     { name: 'About', path: '/about' },
   ];
 
-  const authLinks = user ? [
+  const authLinks: NavLink[] = user ? [
     { name: 'List a Pet', path: '/list-pet' },
     { name: 'My Pets', path: '/my-pets' },
   ] : [];
