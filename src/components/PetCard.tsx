@@ -27,10 +27,14 @@ const PetCard = ({ pet }: PetCardProps) => {
     }
   };
 
+  const handleCardClick = () => {
+    navigate(`/pets/${pet.id}`);
+  };
+
   return (
     <div 
       className="pet-card group cursor-pointer" 
-      onClick={() => navigate(`/pets/${pet.id}`)}
+      onClick={handleCardClick}
     >
       <div className="relative overflow-hidden rounded-t-2xl">
         <img

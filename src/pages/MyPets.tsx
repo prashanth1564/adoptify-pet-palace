@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -27,6 +28,8 @@ const MyPets = () => {
     
     const fetchData = async () => {
       try {
+        setLoading(true);
+        
         // Fetch user's listed pets
         const { data: petsData, error: petsError } = await supabase
           .from('pets')
@@ -36,6 +39,8 @@ const MyPets = () => {
         if (petsError) throw petsError;
         
         setMyPets(petsData as Pet[]);
+        
+        console.log("Fetching adoption requests for owner ID:", user.id);
         
         // Fetch adoption requests received (for pets the user owns)
         const { data: receivedData, error: receivedError } = await supabase
@@ -47,8 +52,12 @@ const MyPets = () => {
           `)
           .eq('owner_id', user.id);
           
-        if (receivedError) throw receivedError;
+        if (receivedError) {
+          console.error("Error fetching received requests:", receivedError);
+          throw receivedError;
+        }
         
+        console.log("Received requests data:", receivedData);
         setRequestsReceived(receivedData as unknown as AdoptionRequest[]);
         
         // Fetch adoption requests sent by the user
