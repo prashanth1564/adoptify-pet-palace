@@ -2,8 +2,20 @@
 import { useNavigate } from 'react-router-dom';
 import { Pet } from '@/types/pet';
 import { useFavorites } from '@/context/FavoritesContext';
-import { Heart, PawPrint } from 'lucide-react';
+import { Heart, PawPrint, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/context/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose
+} from '@/components/ui/dialog';
 
 interface PetCardProps {
   pet: Pet;
@@ -12,6 +24,7 @@ interface PetCardProps {
 const PetCard = ({ pet }: PetCardProps) => {
   const navigate = useNavigate();
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
+  const { user } = useAuth();
   const favorite = isFavorite(pet.id);
 
   const ageDisplay = pet.age < 12 
@@ -73,7 +86,7 @@ const PetCard = ({ pet }: PetCardProps) => {
         </button>
 
         {/* Delete button - only shown for pet owner */}
-        {pet.user_id === (useAuth().user?.id || null) && (
+        {pet.user_id === (user?.id || null) && (
           <Dialog>
             <DialogTrigger asChild>
               <button
