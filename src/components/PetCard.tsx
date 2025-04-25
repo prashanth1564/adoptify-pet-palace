@@ -42,12 +42,26 @@ const PetCard = ({ pet }: PetCardProps) => {
 
   const handleDelete = async () => {
     try {
+      // First delete any adoption requests for this pet
+      const { error: requestsError } = await supabase
+        .from('adoption_requests')
+        .delete()
+        .eq('pet_id', pet.id);
+
+      if (requestsError) {
+        console.error('Error deleting adoption requests:', requestsError);
+        toast.error('Failed to delete related adoption requests');
+        return;
+      }
+
+      // Then delete the pet
       const { error } = await supabase
         .from('pets')
         .delete()
         .eq('id', pet.id);
 
       if (error) throw error;
+      
       toast.success('Pet deleted successfully');
       navigate('/my-pets');
     } catch (error) {

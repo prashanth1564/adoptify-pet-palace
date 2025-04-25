@@ -13,9 +13,4 @@ export interface AdoptionRequest {
   created_at: string;
   updated_at: string;
   pet: Pet;
-  requester_profile: {
-    name: string | null;
-    contact_email: string | null;
-    location: string | null;
-  } | null;
 }

@@ -42,13 +42,12 @@ const MyPets = () => {
         
         console.log("Fetching adoption requests for owner ID:", user.id);
         
-        // Fetch adoption requests received (for pets the user owns)
+        // Fetch adoption requests received (for pets the user owns) - fix the query
         const { data: receivedData, error: receivedError } = await supabase
           .from('adoption_requests')
           .select(`
             *,
-            pet:pets(*),
-            requester_profile:profiles!adoption_requests_requester_id_fkey(name, contact_email, location)
+            pet:pets(*)
           `)
           .eq('owner_id', user.id);
           

@@ -38,7 +38,7 @@ const AdoptionRequestRow = ({
       {showActions && (
         <TableCell>
           <div>
-            <div>{request.requester_profile?.name || 'Unknown User'}</div>
+            <div>Requester</div>
             <div className="flex items-center gap-1 text-sm text-muted-foreground">
               <Mail className="h-3 w-3" />
               {request.contact_email}
