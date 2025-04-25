@@ -27,6 +27,22 @@ const PetCard = ({ pet }: PetCardProps) => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      const { error } = await supabase
+        .from('pets')
+        .delete()
+        .eq('id', pet.id);
+
+      if (error) throw error;
+      toast.success('Pet deleted successfully');
+      navigate('/my-pets');
+    } catch (error) {
+      console.error('Error deleting pet:', error);
+      toast.error('Failed to delete pet');
+    }
+  };
+
   const handleCardClick = () => {
     navigate(`/pets/${pet.id}`);
   };
@@ -55,6 +71,34 @@ const PetCard = ({ pet }: PetCardProps) => {
             )} 
           />
         </button>
+
+        {/* Delete button - only shown for pet owner */}
+        {pet.user_id === (useAuth().user?.id || null) && (
+          <Dialog>
+            <DialogTrigger asChild>
+              <button
+                onClick={(e) => e.stopPropagation()}
+                className="absolute top-3 left-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+                aria-label="Delete pet"
+              >
+                <Trash2 size={20} className="text-red-500" />
+              </button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Delete Pet Listing</DialogTitle>
+              </DialogHeader>
+              <p>Are you sure you want to delete this pet listing? This action cannot be undone.</p>
+              <div className="flex justify-end gap-2 mt-4">
+                <DialogClose asChild>
+                  <Button variant="outline">Cancel</Button>
+                </DialogClose>
+                <Button variant="destructive" onClick={handleDelete}>Delete</Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
+
         <div className="absolute bottom-3 left-3 flex gap-2">
           <span className="pet-tag bg-pet-light-purple text-pet-dark-purple">
             {pet.type.charAt(0).toUpperCase() + pet.type.slice(1)}

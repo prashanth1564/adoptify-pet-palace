@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { toast } from 'sonner';
 
 const Favorites = () => {
   const { favorites } = useFavorites();
@@ -27,7 +29,8 @@ const Favorites = () => {
         const { data, error } = await supabase
           .from('pets')
           .select('*')
-          .in('id', favorites);
+          .filter('id', 'in', `(${favorites.join(',')})`)
+          .throwOnError();
         
         if (error) {
           throw error;
@@ -38,6 +41,7 @@ const Favorites = () => {
         }
       } catch (error) {
         console.error('Error fetching favorite pets:', error);
+        toast.error('Failed to load favorite pets');
       } finally {
         setLoading(false);
       }
@@ -79,21 +83,6 @@ const Favorites = () => {
           )}
         </div>
       </main>
-      
-      <footer className="bg-white border-t py-8 px-4">
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <div className="text-xl font-bold text-pet-purple">Adoptify</div>
-              <div className="text-sm text-muted-foreground">Connecting pets with their forever homes</div>
-            </div>
-            
-            <div className="text-sm text-muted-foreground">
-              © 2023 Adoptify. All rights reserved.
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
