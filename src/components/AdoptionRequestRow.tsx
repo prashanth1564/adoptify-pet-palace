@@ -2,7 +2,7 @@
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Check, X, ExternalLink, Mail, Phone } from 'lucide-react';
+import { Check, X, ExternalLink, Mail, Phone, Trash2 } from 'lucide-react';
 import { AdoptionRequest } from '@/types/adoptionRequest';
 
 interface AdoptionRequestRowProps {
@@ -10,7 +10,9 @@ interface AdoptionRequestRowProps {
   showActions?: boolean;
   onApprove?: (id: string) => void;
   onReject?: (id: string) => void;
+  onDelete?: (id: string) => void;
   onViewPet: (petId: string) => void;
+  isRequestorView?: boolean;
 }
 
 const AdoptionRequestRow = ({ 
@@ -18,7 +20,9 @@ const AdoptionRequestRow = ({
   showActions = false,
   onApprove,
   onReject,
-  onViewPet
+  onDelete,
+  onViewPet,
+  isRequestorView = false
 }: AdoptionRequestRowProps) => {
   return (
     <TableRow>
@@ -94,6 +98,16 @@ const AdoptionRequestRow = ({
                 <X className="h-4 w-4" />
               </Button>
             </>
+          )}
+
+          {isRequestorView && (
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => onDelete?.(request.id)}
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
           )}
         </div>
       </TableCell>

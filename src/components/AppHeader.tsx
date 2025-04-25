@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
+import NotificationBell from '@/components/NotificationBell';
 
 const AppHeader = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -67,6 +68,8 @@ const AppHeader = () => {
         </nav>
         
         <div className="hidden md:flex items-center gap-4">
+          {user && <NotificationBell />}
+          
           {user ? (
             <Button 
               onClick={() => navigate('/profile')} 
@@ -109,18 +112,31 @@ const AppHeader = () => {
           ))}
           <div className="pt-4 flex gap-4 border-t">
             {user ? (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full"
-                onClick={() => {
-                  navigate('/profile');
-                  setMobileMenuOpen(false);
-                }}
-              >
-                <UserRound className="h-4 w-4 mr-2" />
-                Profile
-              </Button>
+              <>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="flex items-center gap-2"
+                  onClick={() => {
+                    navigate('/profile');
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  <UserRound className="h-4 w-4" />
+                  Profile
+                </Button>
+                {user && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    <NotificationBell />
+                  </Button>
+                )}
+              </>
             ) : (
               <Button 
                 size="sm" 

@@ -11,7 +11,9 @@ interface AdoptionRequestsTableProps {
   showRequesterInfo?: boolean;
   onApprove?: (id: string) => void;
   onReject?: (id: string) => void;
+  onDelete?: (id: string) => void;
   onViewPet: (petId: string) => void;
+  isRequestorView?: boolean;
 }
 
 const AdoptionRequestsTable = ({
@@ -21,7 +23,9 @@ const AdoptionRequestsTable = ({
   showRequesterInfo = false,
   onApprove,
   onReject,
-  onViewPet
+  onDelete,
+  onViewPet,
+  isRequestorView = false
 }: AdoptionRequestsTableProps) => {
   return (
     <Card>
@@ -48,7 +52,9 @@ const AdoptionRequestsTable = ({
                 showActions={showRequesterInfo}
                 onApprove={onApprove}
                 onReject={onReject}
+                onDelete={onDelete}
                 onViewPet={onViewPet}
+                isRequestorView={isRequestorView}
               />
             ))}
           </TableBody>

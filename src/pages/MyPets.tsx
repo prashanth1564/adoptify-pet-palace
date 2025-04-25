@@ -42,7 +42,7 @@ const MyPets = () => {
         
         console.log("Fetching adoption requests for owner ID:", user.id);
         
-        // Fetch adoption requests received (for pets the user owns) - fix the query
+        // Fetch adoption requests received (for pets the user owns)
         const { data: receivedData, error: receivedError } = await supabase
           .from('adoption_requests')
           .select(`
@@ -131,6 +131,25 @@ const MyPets = () => {
     }
   };
 
+  const handleDeleteRequest = async (requestId: string) => {
+    try {
+      const { error } = await supabase
+        .from('adoption_requests')
+        .delete()
+        .eq('id', requestId);
+        
+      if (error) throw error;
+      
+      // Remove the deleted request from the state
+      setRequestsSent(prev => prev.filter(request => request.id !== requestId));
+      
+      toast.success('Adoption request deleted successfully');
+    } catch (error) {
+      console.error('Error deleting request:', error);
+      toast.error('Failed to delete request');
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col">
@@ -216,6 +235,8 @@ const MyPets = () => {
                   description="Check the status of your requests to adopt pets"
                   requests={requestsSent}
                   onViewPet={(petId) => navigate(`/pets/${petId}`)}
+                  onDelete={handleDeleteRequest}
+                  isRequestorView={true}
                 />
               )}
             </TabsContent>
