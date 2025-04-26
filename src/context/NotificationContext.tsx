@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/context/AuthContext';
@@ -33,7 +32,6 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
   const { user } = useAuth();
 
   useEffect(() => {
-    // Load notifications from local storage when component mounts
     if (user) {
       const savedNotifications = localStorage.getItem(`notifications_${user.id}`);
       if (savedNotifications) {
@@ -43,7 +41,6 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
   }, [user]);
 
   useEffect(() => {
-    // Save notifications to local storage whenever they change
     if (user && notifications.length > 0) {
       localStorage.setItem(`notifications_${user.id}`, JSON.stringify(notifications));
     }
@@ -52,7 +49,6 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
   useEffect(() => {
     if (!user) return;
 
-    // Setup subscription for adoption request status changes
     const adoptionStatusChannel = supabase
       .channel('adoption_status_notifications')
       .on(
@@ -63,36 +59,45 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
           table: 'adoption_requests',
           filter: `requester_id=eq.${user.id}`,
         },
-        (payload) => {
+        async (payload) => {
           const newStatus = payload.new.status;
           const oldStatus = payload.old.status;
           
-          // Only notify if the status changed from pending to approved/rejected
           if (oldStatus === 'pending' && (newStatus === 'approved' || newStatus === 'rejected')) {
-            // Fetch pet details
-            supabase
+            const { data: petData } = await supabase
               .from('pets')
-              .select('name')
+              .select(`
+                name,
+                user_id
+              `)
               .eq('id', payload.new.pet_id)
-              .single()
-              .then(({ data: pet }) => {
-                if (pet) {
-                  addNotification({
-                    type: newStatus === 'approved' ? 'adoption_approved' : 'adoption_rejected',
-                    title: newStatus === 'approved' ? 'Adoption Request Approved!' : 'Adoption Request Rejected',
-                    message: newStatus === 'approved' 
-                      ? `Your request to adopt ${pet.name} has been approved!` 
-                      : `Your request to adopt ${pet.name} has been rejected.`,
-                    relatedId: payload.new.id
-                  });
-                }
+              .single();
+
+            if (petData) {
+              const { data: ownerProfile } = await supabase
+                .from('profiles')
+                .select('name, contact_email, contact_phone')
+                .eq('id', petData.user_id)
+                .single();
+
+              const ownerDetails = ownerProfile 
+                ? `\nContact details:\nName: ${ownerProfile.name || 'Not provided'}\nEmail: ${ownerProfile.contact_email || 'Not provided'}\nPhone: ${ownerProfile.contact_phone || 'Not provided'}`
+                : '';
+
+              addNotification({
+                type: newStatus === 'approved' ? 'adoption_approved' : 'adoption_rejected',
+                title: newStatus === 'approved' ? 'Adoption Request Approved!' : 'Adoption Request Rejected',
+                message: newStatus === 'approved' 
+                  ? `Your request to adopt ${petData.name} has been approved! ${ownerDetails}` 
+                  : `Your request to adopt ${petData.name} has been rejected.`,
+                relatedId: payload.new.id
               });
+            }
           }
         }
       )
       .subscribe();
 
-    // Setup subscription for new adoption requests (for pet owners)
     const newRequestsChannel = supabase
       .channel('new_adoption_requests')
       .on(
@@ -104,7 +109,6 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
           filter: `owner_id=eq.${user.id}`,
         },
         (payload) => {
-          // Fetch pet details
           supabase
             .from('pets')
             .select('name')
@@ -124,7 +128,6 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
       )
       .subscribe();
 
-    // Cleanup subscriptions on unmount
     return () => {
       supabase.removeChannel(adoptionStatusChannel);
       supabase.removeChannel(newRequestsChannel);
