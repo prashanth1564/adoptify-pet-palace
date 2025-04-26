@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FavoritesProvider } from "@/context/FavoritesContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { NotificationProvider } from "@/context/NotificationContext";
+import React from "react"; // Add React import
 import Index from "./pages/Index";
 import Pets from "./pages/Pets";
 import PetDetails from "./pages/PetDetails";
@@ -22,34 +23,37 @@ import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
+// Fixed App component with proper provider hierarchy
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <AuthProvider>
-        <NotificationProvider>
-          <FavoritesProvider>
-            <Toaster />
-            <SonnerToaster />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/pets" element={<Pets />} />
-                <Route path="/pets/:id" element={<PetDetails />} />
-                <Route path="/favorites" element={<Favorites />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/adopt/:id" element={<AdoptionForm />} />
-                <Route path="/list-pet" element={<ProtectedRoute><ListPet /></ProtectedRoute>} />
-                <Route path="/my-pets" element={<ProtectedRoute><MyPets /></ProtectedRoute>} />
-                <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </FavoritesProvider>
-        </NotificationProvider>
-      </AuthProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AuthProvider>
+          <NotificationProvider>
+            <FavoritesProvider>
+              <TooltipProvider>
+                <Toaster />
+                <SonnerToaster />
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/pets" element={<Pets />} />
+                  <Route path="/pets/:id" element={<PetDetails />} />
+                  <Route path="/favorites" element={<Favorites />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route path="/adopt/:id" element={<AdoptionForm />} />
+                  <Route path="/list-pet" element={<ProtectedRoute><ListPet /></ProtectedRoute>} />
+                  <Route path="/my-pets" element={<ProtectedRoute><MyPets /></ProtectedRoute>} />
+                  <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </TooltipProvider>
+            </FavoritesProvider>
+          </NotificationProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
+  </React.StrictMode>
 );
 
 export default App;
