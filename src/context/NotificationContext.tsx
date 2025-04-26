@@ -53,8 +53,8 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
     if (!user) return;
 
     // Setup subscription for adoption request status changes
-    const adoptionChannel = supabase
-      .channel('adoption_notifications')
+    const adoptionStatusChannel = supabase
+      .channel('adoption_status_notifications')
       .on(
         'postgres_changes',
         {
@@ -92,9 +92,42 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
       )
       .subscribe();
 
-    // Cleanup subscription on unmount
+    // Setup subscription for new adoption requests (for pet owners)
+    const newRequestsChannel = supabase
+      .channel('new_adoption_requests')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'adoption_requests',
+          filter: `owner_id=eq.${user.id}`,
+        },
+        (payload) => {
+          // Fetch pet details
+          supabase
+            .from('pets')
+            .select('name')
+            .eq('id', payload.new.pet_id)
+            .single()
+            .then(({ data: pet }) => {
+              if (pet) {
+                addNotification({
+                  type: 'adoption_request',
+                  title: 'New Adoption Request!',
+                  message: `Someone wants to adopt your pet ${pet.name}. Check the request in My Pets.`,
+                  relatedId: payload.new.id
+                });
+              }
+            });
+        }
+      )
+      .subscribe();
+
+    // Cleanup subscriptions on unmount
     return () => {
-      supabase.removeChannel(adoptionChannel);
+      supabase.removeChannel(adoptionStatusChannel);
+      supabase.removeChannel(newRequestsChannel);
     };
   }, [user]);
 

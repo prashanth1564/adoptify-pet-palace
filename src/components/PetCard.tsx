@@ -8,6 +8,7 @@ import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import { useNotifications } from '@/context/NotificationContext';
 import {
   Dialog,
   DialogContent,
@@ -42,6 +43,9 @@ const PetCard = ({ pet }: PetCardProps) => {
 
   const handleDelete = async () => {
     try {
+      // Show loading toast
+      toast.loading('Deleting pet listing...');
+      
       // First delete any adoption requests for this pet
       const { error: requestsError } = await supabase
         .from('adoption_requests')
@@ -50,6 +54,7 @@ const PetCard = ({ pet }: PetCardProps) => {
 
       if (requestsError) {
         console.error('Error deleting adoption requests:', requestsError);
+        toast.dismiss();
         toast.error('Failed to delete related adoption requests');
         return;
       }
@@ -62,10 +67,12 @@ const PetCard = ({ pet }: PetCardProps) => {
 
       if (error) throw error;
       
+      toast.dismiss();
       toast.success('Pet deleted successfully');
       navigate('/my-pets');
     } catch (error) {
       console.error('Error deleting pet:', error);
+      toast.dismiss();
       toast.error('Failed to delete pet');
     }
   };
