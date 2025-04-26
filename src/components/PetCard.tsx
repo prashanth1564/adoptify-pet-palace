@@ -1,14 +1,13 @@
-
 import { useNavigate } from 'react-router-dom';
 import { Pet } from '@/types/pet';
 import { useFavorites } from '@/context/FavoritesContext';
-import { Heart, PawPrint, Trash2 } from 'lucide-react';
+import { Heart, PawPrint, Trash2, Phone, Mail, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { useNotifications } from '@/context/NotificationContext';
+import { useEffect, useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -27,6 +26,35 @@ const PetCard = ({ pet }: PetCardProps) => {
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
   const { user } = useAuth();
   const favorite = isFavorite(pet.id);
+  const [ownerProfile, setOwnerProfile] = useState<any>(null);
+  const [isApproved, setIsApproved] = useState(false);
+
+  useEffect(() => {
+    const fetchOwnerProfile = async () => {
+      const { data } = await supabase
+        .from('profiles')
+        .select('name, contact_phone, contact_email')
+        .eq('id', pet.user_id)
+        .single();
+      if (data) {
+        setOwnerProfile(data);
+      }
+    };
+
+    const checkIfApproved = async () => {
+      const { data } = await supabase
+        .from('adoption_requests')
+        .select('status')
+        .eq('pet_id', pet.id)
+        .eq('status', 'approved')
+        .maybeSingle();
+      
+      setIsApproved(!!data);
+    };
+
+    fetchOwnerProfile();
+    checkIfApproved();
+  }, [pet.user_id, pet.id]);
 
   const ageDisplay = pet.age < 12 
     ? `${pet.age} ${pet.age === 1 ? 'month' : 'months'}`
@@ -43,10 +71,8 @@ const PetCard = ({ pet }: PetCardProps) => {
 
   const handleDelete = async () => {
     try {
-      // Show loading toast
       toast.loading('Deleting pet listing...');
       
-      // First delete any adoption requests for this pet
       const { error: requestsError } = await supabase
         .from('adoption_requests')
         .delete()
@@ -59,7 +85,6 @@ const PetCard = ({ pet }: PetCardProps) => {
         return;
       }
 
-      // Then delete the pet
       const { error } = await supabase
         .from('pets')
         .delete()
@@ -92,6 +117,11 @@ const PetCard = ({ pet }: PetCardProps) => {
           alt={pet.name}
           className="pet-card-image group-hover:scale-105 transition-transform duration-300"
         />
+        {isApproved && (
+          <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+            <span className="text-white text-xl font-bold">Already Adopted</span>
+          </div>
+        )}
         <button 
           onClick={handleFavoriteClick}
           className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
@@ -106,7 +136,6 @@ const PetCard = ({ pet }: PetCardProps) => {
           />
         </button>
 
-        {/* Delete button - only shown for pet owner */}
         {pet.user_id === (user?.id || null) && (
           <Dialog>
             <DialogTrigger asChild>
@@ -153,6 +182,27 @@ const PetCard = ({ pet }: PetCardProps) => {
         </div>
         <p className="text-sm text-muted-foreground line-clamp-1">{pet.location}</p>
         <p className="text-sm line-clamp-2 mt-1">{pet.description}</p>
+        
+        {ownerProfile && (
+          <div className="mt-3 pt-3 border-t">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <User size={14} />
+              <span>{ownerProfile.name || 'Pet Owner'}</span>
+            </div>
+            {ownerProfile.contact_phone && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                <Phone size={14} />
+                <span>{ownerProfile.contact_phone}</span>
+              </div>
+            )}
+            {ownerProfile.contact_email && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                <Mail size={14} />
+                <span>{ownerProfile.contact_email}</span>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Pet } from '@/types/pet';
@@ -34,10 +33,9 @@ const PetDetails = () => {
   const navigate = useNavigate();
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
   const { user } = useAuth();
-  
+  const [isAdopted, setIsAdopted] = useState(false);
+
   useEffect(() => {
-    if (!id) return;
-    
     const fetchPetDetails = async () => {
       try {
         const { data: petData, error: petError } = await supabase
@@ -51,7 +49,15 @@ const PetDetails = () => {
         if (petData) {
           setPet(petData as Pet);
           
-          // Fetch the owner's profile
+          const { data: adoptionData } = await supabase
+            .from('adoption_requests')
+            .select('status')
+            .eq('pet_id', id)
+            .eq('status', 'approved')
+            .maybeSingle();
+          
+          setIsAdopted(!!adoptionData);
+          
           if (petData.user_id) {
             const { data: profileData, error: profileError } = await supabase
               .from('profiles')
@@ -64,7 +70,6 @@ const PetDetails = () => {
             }
           }
           
-          // If user is logged in, check if they've already submitted an adoption request
           if (user) {
             const { data: requestData, error: requestError } = await supabase
               .from('adoption_requests')
@@ -86,7 +91,9 @@ const PetDetails = () => {
       }
     };
     
-    fetchPetDetails();
+    if (id) {
+      fetchPetDetails();
+    }
   }, [id, user]);
   
   if (loading) {
@@ -128,6 +135,7 @@ const PetDetails = () => {
   const getAdoptionButtonState = () => {
     if (!user) return { text: "Sign in to Adopt", action: () => navigate('/auth') };
     if (isOwner) return { text: "This is your pet", action: () => navigate('/my-pets'), disabled: true };
+    if (isAdopted) return { text: "Already Adopted", disabled: true };
     if (adoptionRequest) {
       if (adoptionRequest.status === 'pending') return { text: "Adoption request pending", disabled: true };
       if (adoptionRequest.status === 'approved') return { text: "Adoption approved!", disabled: true };
