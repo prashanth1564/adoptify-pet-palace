@@ -1,4 +1,3 @@
-
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Heart, UserRound } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -24,6 +23,7 @@ const AppHeader = () => {
     { name: 'Pets', path: '/pets' },
     { name: 'Favorites', path: '/favorites', icon: Heart },
     { name: 'About', path: '/about' },
+    { name: 'Documentation', path: '/documentation' },
   ];
 
   const authLinks: NavLink[] = user ? [

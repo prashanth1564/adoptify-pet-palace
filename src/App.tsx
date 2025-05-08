@@ -19,6 +19,7 @@ import ListPet from "./pages/ListPet";
 import MyPets from "./pages/MyPets";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
+import Documentation from "./pages/Documentation";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const App = () => (
                 <Route path="/list-pet" element={<ProtectedRoute><ListPet /></ProtectedRoute>} />
                 <Route path="/my-pets" element={<ProtectedRoute><MyPets /></ProtectedRoute>} />
                 <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                <Route path="/documentation" element={<Documentation />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </TooltipProvider>
