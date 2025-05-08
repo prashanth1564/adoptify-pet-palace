@@ -81,6 +81,24 @@ const MyPets = () => {
     };
     
     fetchData();
+
+    // Listen for changes in the pets table
+    const petsSubscription = supabase
+      .channel('pets-changes')
+      .on('postgres_changes', { 
+        event: '*', 
+        schema: 'public', 
+        table: 'pets',
+        filter: `user_id=eq.${user.id}`
+      }, () => {
+        // Refresh pets when there's a change
+        fetchData();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(petsSubscription);
+    };
   }, [user]);
 
   const handleApproveRequest = async (requestId: string) => {

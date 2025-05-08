@@ -1,3 +1,4 @@
+
 import { useNavigate } from 'react-router-dom';
 import { Pet } from '@/types/pet';
 import { useFavorites } from '@/context/FavoritesContext';
@@ -71,8 +72,9 @@ const PetCard = ({ pet }: PetCardProps) => {
 
   const handleDelete = async () => {
     try {
-      toast.loading('Deleting pet listing...');
+      const loadingToast = toast.loading('Deleting pet listing...');
       
+      // First delete all related adoption requests
       const { error: requestsError } = await supabase
         .from('adoption_requests')
         .delete()
@@ -80,25 +82,32 @@ const PetCard = ({ pet }: PetCardProps) => {
 
       if (requestsError) {
         console.error('Error deleting adoption requests:', requestsError);
-        toast.dismiss();
+        toast.dismiss(loadingToast);
         toast.error('Failed to delete related adoption requests');
         return;
       }
 
-      const { error } = await supabase
+      // Then delete the pet
+      const { error: petError } = await supabase
         .from('pets')
         .delete()
         .eq('id', pet.id);
 
-      if (error) throw error;
+      if (petError) {
+        console.error('Error deleting pet:', petError);
+        toast.dismiss(loadingToast);
+        toast.error(`Failed to delete pet: ${petError.message}`);
+        return;
+      }
       
-      toast.dismiss();
+      toast.dismiss(loadingToast);
       toast.success('Pet deleted successfully');
-      navigate('/my-pets');
+      
+      // Navigate after successful deletion
+      navigate('/my-pets', { replace: true });
     } catch (error) {
-      console.error('Error deleting pet:', error);
-      toast.dismiss();
-      toast.error('Failed to delete pet');
+      console.error('Error in delete operation:', error);
+      toast.error('An unexpected error occurred');
     }
   };
 
