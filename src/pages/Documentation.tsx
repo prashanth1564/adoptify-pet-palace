@@ -24,42 +24,77 @@ const Documentation = () => {
             <section>
               <h2 className="text-2xl font-semibold mb-4">System Architecture</h2>
               <div className="border p-4 rounded-lg bg-gray-50 dark:bg-gray-900">
-                <div className="flex flex-col">
-                  <div className="border border-gray-300 p-4 rounded-lg mb-4 bg-white dark:bg-gray-800">
-                    <h3 className="text-lg font-medium mb-2">Frontend (Client)</h3>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>React components</li>
-                      <li>React Router for navigation</li>
-                      <li>Context API for state management</li>
-                      <li>Tailwind CSS for styling</li>
-                    </ul>
+                {/* UML-style architecture diagram */}
+                <div className="flex flex-col items-center">
+                  {/* Client/Frontend Layer */}
+                  <div className="border-2 border-blue-500 p-4 rounded-lg mb-4 bg-blue-50 dark:bg-blue-900/20 w-full max-w-xl">
+                    <h3 className="text-lg font-medium mb-2 text-center border-b border-blue-300 pb-2">Frontend Layer</h3>
+                    <div className="grid grid-cols-2 gap-4 mt-2">
+                      <div className="border border-blue-300 p-2 rounded text-center bg-white dark:bg-gray-800">
+                        React Components
+                      </div>
+                      <div className="border border-blue-300 p-2 rounded text-center bg-white dark:bg-gray-800">
+                        React Router
+                      </div>
+                      <div className="border border-blue-300 p-2 rounded text-center bg-white dark:bg-gray-800">
+                        Context API
+                      </div>
+                      <div className="border border-blue-300 p-2 rounded text-center bg-white dark:bg-gray-800">
+                        Tailwind CSS
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Arrow down */}
+                  <div className="w-20 h-10 flex items-center justify-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 4L12 20M12 20L18 14M12 20L6 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
                   </div>
                   
-                  <div className="flex justify-center my-2">
-                    <div className="border-l-2 h-8 border-dashed border-gray-400"></div>
+                  {/* API Layer */}
+                  <div className="border-2 border-purple-500 p-4 rounded-lg mb-4 bg-purple-50 dark:bg-purple-900/20 w-full max-w-xl">
+                    <h3 className="text-lg font-medium mb-2 text-center border-b border-purple-300 pb-2">API Layer</h3>
+                    <div className="grid grid-cols-2 gap-4 mt-2">
+                      <div className="border border-purple-300 p-2 rounded text-center bg-white dark:bg-gray-800">
+                        React Query
+                      </div>
+                      <div className="border border-purple-300 p-2 rounded text-center bg-white dark:bg-gray-800">
+                        Supabase Client
+                      </div>
+                      <div className="border border-purple-300 p-2 rounded text-center bg-white dark:bg-gray-800">
+                        Authentication
+                      </div>
+                      <div className="border border-purple-300 p-2 rounded text-center bg-white dark:bg-gray-800">
+                        Data Fetching
+                      </div>
+                    </div>
                   </div>
                   
-                  <div className="border border-gray-300 p-4 rounded-lg mb-4 bg-white dark:bg-gray-800">
-                    <h3 className="text-lg font-medium mb-2">API Layer</h3>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>React Query for data fetching</li>
-                      <li>Supabase API client</li>
-                      <li>Authentication services</li>
-                    </ul>
+                  {/* Arrow down */}
+                  <div className="w-20 h-10 flex items-center justify-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 4L12 20M12 20L18 14M12 20L6 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
                   </div>
                   
-                  <div className="flex justify-center my-2">
-                    <div className="border-l-2 h-8 border-dashed border-gray-400"></div>
-                  </div>
-                  
-                  <div className="border border-gray-300 p-4 rounded-lg bg-white dark:bg-gray-800">
-                    <h3 className="text-lg font-medium mb-2">Backend (Supabase)</h3>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>PostgreSQL Database</li>
-                      <li>Auth Services</li>
-                      <li>Storage Buckets (for pet images)</li>
-                      <li>Real-time subscription</li>
-                    </ul>
+                  {/* Backend Layer */}
+                  <div className="border-2 border-green-500 p-4 rounded-lg bg-green-50 dark:bg-green-900/20 w-full max-w-xl">
+                    <h3 className="text-lg font-medium mb-2 text-center border-b border-green-300 pb-2">Supabase Backend</h3>
+                    <div className="grid grid-cols-2 gap-4 mt-2">
+                      <div className="border border-green-300 p-2 rounded text-center bg-white dark:bg-gray-800">
+                        PostgreSQL Database
+                      </div>
+                      <div className="border border-green-300 p-2 rounded text-center bg-white dark:bg-gray-800">
+                        Auth Services
+                      </div>
+                      <div className="border border-green-300 p-2 rounded text-center bg-white dark:bg-gray-800">
+                        Storage Buckets
+                      </div>
+                      <div className="border border-green-300 p-2 rounded text-center bg-white dark:bg-gray-800">
+                        Realtime Subscriptions
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -72,54 +107,60 @@ const Documentation = () => {
               <div className="grid gap-6 md:grid-cols-2">
                 <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
                   <h3 className="text-lg font-medium mb-2">Pet Adopter</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2">
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs">1</span>
-                      <span>Browse available pets for adoption</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs">2</span>
-                      <span>Add pets to favorites</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs">3</span>
-                      <span>View pet details and owner information</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs">4</span>
-                      <span>Submit adoption request form</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs">5</span>
-                      <span>Contact pet owner</span>
-                    </li>
-                  </ul>
+                  <div className="border border-dashed border-gray-300 p-4 rounded-lg">
+                    <div className="text-center font-medium mb-4">Actor: Pet Adopter</div>
+                    <ul className="space-y-3">
+                      <li className="flex items-start gap-3">
+                        <div className="min-w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs flex items-center justify-center">UC1</div>
+                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Browse available pets</div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="min-w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs flex items-center justify-center">UC2</div>
+                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Add pets to favorites</div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="min-w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs flex items-center justify-center">UC3</div>
+                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">View pet details</div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="min-w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs flex items-center justify-center">UC4</div>
+                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Submit adoption request</div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="min-w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs flex items-center justify-center">UC5</div>
+                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Contact pet owner</div>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
                 
                 <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
                   <h3 className="text-lg font-medium mb-2">Pet Owner</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2">
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs">1</span>
-                      <span>List pets for adoption</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs">2</span>
-                      <span>Update pet information</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs">3</span>
-                      <span>View adoption requests</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs">4</span>
-                      <span>Approve/reject adoption requests</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs">5</span>
-                      <span>Mark pet as adopted</span>
-                    </li>
-                  </ul>
+                  <div className="border border-dashed border-gray-300 p-4 rounded-lg">
+                    <div className="text-center font-medium mb-4">Actor: Pet Owner</div>
+                    <ul className="space-y-3">
+                      <li className="flex items-start gap-3">
+                        <div className="min-w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs flex items-center justify-center">UC6</div>
+                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">List pets for adoption</div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="min-w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs flex items-center justify-center">UC7</div>
+                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Update pet information</div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="min-w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs flex items-center justify-center">UC8</div>
+                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">View adoption requests</div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="min-w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs flex items-center justify-center">UC9</div>
+                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Approve/reject requests</div>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="min-w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs flex items-center justify-center">UC10</div>
+                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Mark pet as adopted</div>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </section>
@@ -132,55 +173,67 @@ const Documentation = () => {
                 <div className="min-w-[700px]">
                   <h3 className="text-lg font-medium mb-6 text-center">Pet Adoption Process State Chart</h3>
                   
-                  <div className="flex justify-center items-center gap-8">
-                    <div className="flex flex-col items-center">
-                      <div className="p-4 border border-gray-300 rounded-lg bg-pet-soft-peach w-36 text-center">
-                        <span className="font-medium">Available</span>
-                      </div>
-                      <div className="h-16 border-l border-dashed border-gray-400"></div>
-                      <div className="p-4 border border-gray-300 rounded-lg bg-pet-soft-blue w-36 text-center">
-                        <span className="font-medium">Request Pending</span>
-                      </div>
-                      <div className="h-16 border-l border-dashed border-gray-400"></div>
-                      <div className="flex gap-8 items-center">
-                        <div>
-                          <div className="p-4 border border-gray-300 rounded-lg bg-red-100 w-36 text-center">
-                            <span className="font-medium">Rejected</span>
-                          </div>
-                          <div className="h-16 border-l border-dashed border-gray-400 ml-16"></div>
-                          <div className="w-32 text-center mt-[-16px]">
-                            <span className="text-xs text-gray-500">(returns to Available)</span>
-                          </div>
-                        </div>
-                        <div className="p-4 border border-gray-300 rounded-lg bg-green-100 w-36 text-center">
-                          <span className="font-medium">Approved</span>
-                        </div>
-                      </div>
-                      <div className="h-16 border-l border-dashed border-gray-400 ml-[142px]"></div>
-                      <div className="p-4 border border-gray-300 rounded-lg bg-gray-200 w-36 ml-[104px] text-center">
-                        <span className="font-medium">Adopted</span>
-                      </div>
+                  {/* UML State Chart */}
+                  <div className="flex flex-col items-center">
+                    {/* Initial State */}
+                    <div className="w-4 h-4 rounded-full bg-black"></div>
+                    <div className="h-6 border-l border-black"></div>
+                    
+                    {/* Available State */}
+                    <div className="border-2 border-gray-400 rounded-lg p-3 w-40 text-center mb-6">
+                      <div className="font-medium">Available</div>
                     </div>
                     
-                    <div className="space-y-8">
-                      <div className="p-4 border border-gray-300 rounded-lg bg-gray-100 w-48">
-                        <span className="text-sm block mb-1 font-medium">State Transitions:</span>
-                        <ul className="text-xs space-y-2">
-                          <li>• Pet Listed → Available</li>
-                          <li>• User Applies → Request Pending</li>
-                          <li>• Owner Rejects → Rejected</li>
-                          <li>• Owner Approves → Approved</li>
-                          <li>• Process Complete → Adopted</li>
-                        </ul>
+                    {/* Transition Arrow */}
+                    <div className="flex flex-col items-center">
+                      <div className="h-6 border-l border-black"></div>
+                      <div className="text-xs text-gray-500 mb-1">[User Submits Request]</div>
+                      <div className="h-6 border-l border-black"></div>
+                    </div>
+                    
+                    {/* Request Pending State */}
+                    <div className="border-2 border-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 w-44 text-center mb-6">
+                      <div className="font-medium">Request Pending</div>
+                    </div>
+                    
+                    {/* Decision Fork */}
+                    <div className="flex flex-col items-center">
+                      <div className="h-6 border-l border-black"></div>
+                      <div className="w-40 border-b-2 border-black"></div>
+                    </div>
+                    
+                    {/* Rejected and Approved States */}
+                    <div className="flex gap-40 mb-6">
+                      <div className="flex flex-col items-center">
+                        <div className="h-6 border-l border-black"></div>
+                        <div className="text-xs text-gray-500 mb-1">[Owner Rejects]</div>
+                        <div className="h-6 border-l border-black"></div>
+                        <div className="border-2 border-red-400 bg-red-50 dark:bg-red-900/20 rounded-lg p-3 w-40 text-center">
+                          <div className="font-medium">Rejected</div>
+                        </div>
+                        <div className="h-6 border-l border-black"></div>
+                        <svg className="w-16 h-8" viewBox="0 0 64 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M0 16H30C30 8 60 8 60 16H64" stroke="black" strokeWidth="1"/>
+                          <path d="M60 16L52 12V20L60 16Z" fill="black"/>
+                        </svg>
                       </div>
                       
-                      <div className="p-4 border border-gray-300 rounded-lg bg-gray-100 w-48">
-                        <span className="text-sm block mb-1 font-medium">Guards:</span>
-                        <ul className="text-xs space-y-2">
-                          <li>• User Authenticated</li>
-                          <li>• Form Complete</li>
-                          <li>• Owner Verified</li>
-                        </ul>
+                      <div className="flex flex-col items-center">
+                        <div className="h-6 border-l border-black"></div>
+                        <div className="text-xs text-gray-500 mb-1">[Owner Approves]</div>
+                        <div className="h-6 border-l border-black"></div>
+                        <div className="border-2 border-green-400 bg-green-50 dark:bg-green-900/20 rounded-lg p-3 w-40 text-center">
+                          <div className="font-medium">Approved</div>
+                        </div>
+                        <div className="h-6 border-l border-black"></div>
+                        <div className="h-6 border-l border-black"></div>
+                        <div className="text-xs text-gray-500 mb-1">[Process Complete]</div>
+                        <div className="h-6 border-l border-black"></div>
+                        <div className="border-2 border-gray-400 rounded-lg p-3 w-40 text-center">
+                          <div className="font-medium">Adopted</div>
+                        </div>
+                        <div className="h-6 border-l border-black"></div>
+                        <div className="w-4 h-4 rounded-full bg-black border-4 border-white dark:border-gray-800"></div>
                       </div>
                     </div>
                   </div>
@@ -196,60 +249,79 @@ const Documentation = () => {
                 <div className="min-w-[700px]">
                   <h3 className="text-lg font-medium mb-6 text-center">Pet Adoption Activity Flow</h3>
                   
-                  <div className="flex justify-center">
-                    <div className="flex flex-col items-center">
-                      <div className="p-3 rounded-full bg-pet-light-purple w-32 text-center">
-                        <span className="font-medium">Start</span>
-                      </div>
-                      <div className="h-8 border-l border-gray-400"></div>
-                      
-                      <div className="flex gap-40">
-                        <div className="flex flex-col items-center">
-                          <div className="p-3 border border-gray-300 rounded-lg bg-pet-soft-peach w-40 text-center">
-                            <span className="font-medium">User Browses Pets</span>
-                          </div>
-                          <div className="h-8 border-l border-gray-400"></div>
-                          <div className="p-3 border border-gray-300 rounded-lg bg-pet-soft-peach w-40 text-center">
-                            <span className="font-medium">Views Pet Details</span>
-                          </div>
-                          <div className="h-8 border-l border-gray-400"></div>
-                          <div className="p-3 border border-gray-300 rounded-lg bg-pet-soft-peach w-40 text-center">
-                            <span className="font-medium">Submits Adoption Form</span>
-                          </div>
+                  {/* UML Activity Diagram */}
+                  <div className="flex flex-col items-center">
+                    {/* Start Node */}
+                    <div className="w-16 h-16 rounded-full bg-black mb-4"></div>
+                    <div className="h-8 border-l-2 border-black"></div>
+                    
+                    <div className="flex gap-36">
+                      {/* User Activities */}
+                      <div className="flex flex-col items-center">
+                        <div className="border-2 border-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 w-48 text-center mb-4">
+                          <div className="font-medium">User Browses Pets</div>
                         </div>
+                        <div className="h-8 border-l-2 border-black"></div>
+                        <div className="border-2 border-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 w-48 text-center mb-4">
+                          <div className="font-medium">User Views Pet Details</div>
+                        </div>
+                        <div className="h-8 border-l-2 border-black"></div>
+                        <div className="border-2 border-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 w-48 text-center mb-4">
+                          <div className="font-medium">Submit Adoption Form</div>
+                        </div>
+                        <div className="h-8 border-l-2 border-black"></div>
+                        <svg className="w-48 h-8" viewBox="0 0 192 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M96 0V32" stroke="black" strokeWidth="2"/>
+                          <path d="M0 32H192" stroke="black" strokeWidth="2"/>
+                        </svg>
+                      </div>
+                      
+                      {/* Owner Activities */}
+                      <div className="flex flex-col items-center mt-32">
+                        <div className="h-8 border-l-2 border-black"></div>
+                        <div className="border-2 border-purple-400 bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3 w-48 text-center mb-4">
+                          <div className="font-medium">Owner Reviews Request</div>
+                        </div>
+                        <div className="h-8 border-l-2 border-black"></div>
                         
-                        <div className="flex flex-col items-center mt-24">
-                          <div className="p-3 border border-gray-300 rounded-lg bg-pet-soft-blue w-40 text-center">
-                            <span className="font-medium">Owner Reviews Request</span>
-                          </div>
-                          <div className="h-8 border-l border-gray-400"></div>
-                          <div className="p-3 border border-gray-300 rounded-lg bg-pet-soft-blue w-40 text-center">
-                            <span className="font-medium">Decision</span>
-                          </div>
-                          <div className="h-8 border-l border-gray-400"></div>
-                          <div className="flex gap-6">
-                            <div className="flex flex-col items-center">
-                              <div className="p-3 border border-green-300 rounded-lg bg-green-100 w-36 text-center">
-                                <span className="font-medium">Approved</span>
-                              </div>
-                              <div className="h-8 border-l border-gray-400"></div>
-                              <div className="p-3 border border-gray-300 rounded-lg bg-gray-200 w-36 text-center">
-                                <span className="font-medium">Pet Adoption Finalized</span>
-                              </div>
+                        {/* Decision Diamond */}
+                        <div className="w-16 h-16 border-2 border-black rotate-45 mb-6"></div>
+                        
+                        {/* Fork for Approved/Rejected */}
+                        <div className="flex gap-24">
+                          <div className="flex flex-col items-center">
+                            <div className="h-8 border-l-2 border-black"></div>
+                            <div className="text-xs text-gray-500 mb-1">[Rejected]</div>
+                            <div className="h-4 border-l-2 border-black"></div>
+                            <div className="border-2 border-red-400 bg-red-50 dark:bg-red-900/20 rounded-lg p-3 w-40 text-center">
+                              <div className="font-medium">Adoption Rejected</div>
                             </div>
-                            <div>
-                              <div className="p-3 border border-red-300 rounded-lg bg-red-100 w-36 text-center">
-                                <span className="font-medium">Rejected</span>
-                              </div>
+                          </div>
+                          
+                          <div className="flex flex-col items-center">
+                            <div className="h-8 border-l-2 border-black"></div>
+                            <div className="text-xs text-gray-500 mb-1">[Approved]</div>
+                            <div className="h-4 border-l-2 border-black"></div>
+                            <div className="border-2 border-green-400 bg-green-50 dark:bg-green-900/20 rounded-lg p-3 w-40 text-center mb-4">
+                              <div className="font-medium">Adoption Approved</div>
+                            </div>
+                            <div className="h-8 border-l-2 border-black"></div>
+                            <div className="border-2 border-gray-400 rounded-lg p-3 w-40 text-center mb-4">
+                              <div className="font-medium">Pet Adoption Finalized</div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      
-                      <div className="h-8 border-l border-gray-400 ml-[-136px] mt-8"></div>
-                      <div className="p-3 rounded-full bg-pet-dark-purple w-32 text-center text-white ml-[-136px]">
-                        <span className="font-medium">End</span>
-                      </div>
+                    </div>
+                    
+                    {/* Join to End Node */}
+                    <div className="mt-8">
+                      <svg className="w-48 h-8" viewBox="0 0 192 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M96 0V32" stroke="black" strokeWidth="2"/>
+                        <path d="M0 0H192" stroke="black" strokeWidth="2"/>
+                      </svg>
+                      <div className="h-8 border-l-2 border-black ml-24"></div>
+                      <div className="w-16 h-16 rounded-full bg-black border-4 border-white dark:border-gray-800 ml-16"></div>
                     </div>
                   </div>
                 </div>
