@@ -103,63 +103,178 @@ const Documentation = () => {
           
           <TabsContent value="usecases" className="space-y-6">
             <section>
-              <h2 className="text-2xl font-semibold mb-4">Use Cases</h2>
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
-                  <h3 className="text-lg font-medium mb-2">Pet Adopter</h3>
-                  <div className="border border-dashed border-gray-300 p-4 rounded-lg">
-                    <div className="text-center font-medium mb-4">Actor: Pet Adopter</div>
-                    <ul className="space-y-3">
-                      <li className="flex items-start gap-3">
-                        <div className="min-w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs flex items-center justify-center">UC1</div>
-                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Browse available pets</div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="min-w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs flex items-center justify-center">UC2</div>
-                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Add pets to favorites</div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="min-w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs flex items-center justify-center">UC3</div>
-                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">View pet details</div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="min-w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs flex items-center justify-center">UC4</div>
-                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Submit adoption request</div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="min-w-6 h-6 rounded-full bg-pet-light-purple text-pet-dark-purple font-medium text-xs flex items-center justify-center">UC5</div>
-                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Contact pet owner</div>
-                      </li>
-                    </ul>
+              <h2 className="text-2xl font-semibold mb-4">Use Case Diagram</h2>
+              <div className="border p-4 rounded-lg bg-gray-50 dark:bg-gray-900 overflow-auto">
+                <div className="min-w-[800px] min-h-[600px] relative">
+                  {/* UML Use Case Diagram */}
+                  
+                  {/* Actor: Regular User */}
+                  <div className="absolute left-16 top-1/3">
+                    <div className="flex flex-col items-center">
+                      <div className="w-10 h-10 rounded-full border-2 border-black"></div>
+                      <div className="h-20 w-0.5 bg-black mx-auto"></div>
+                      <div className="w-12 rotate-45 h-0.5 bg-black absolute top-[58px] left-[13px]"></div>
+                      <div className="w-12 -rotate-45 h-0.5 bg-black absolute top-[58px] right-[13px]"></div>
+                      <div className="h-16 w-0.5 bg-black mx-auto"></div>
+                      <div className="w-8 rotate-30 h-0.5 bg-black absolute top-[95px] left-[10px]"></div>
+                      <div className="w-8 -rotate-30 h-0.5 bg-black absolute top-[95px] right-[10px]"></div>
+                      <div className="mt-2 text-center">Pet Adopter</div>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
-                  <h3 className="text-lg font-medium mb-2">Pet Owner</h3>
-                  <div className="border border-dashed border-gray-300 p-4 rounded-lg">
-                    <div className="text-center font-medium mb-4">Actor: Pet Owner</div>
-                    <ul className="space-y-3">
-                      <li className="flex items-start gap-3">
-                        <div className="min-w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs flex items-center justify-center">UC6</div>
-                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">List pets for adoption</div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="min-w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs flex items-center justify-center">UC7</div>
-                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Update pet information</div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="min-w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs flex items-center justify-center">UC8</div>
-                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">View adoption requests</div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="min-w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs flex items-center justify-center">UC9</div>
-                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Approve/reject requests</div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="min-w-6 h-6 rounded-full bg-pet-soft-blue text-blue-700 font-medium text-xs flex items-center justify-center">UC10</div>
-                        <div className="border border-gray-200 rounded p-2 flex-1 bg-gray-50 dark:bg-gray-700">Mark pet as adopted</div>
-                      </li>
-                    </ul>
+                  
+                  {/* Actor: Admin User */}
+                  <div className="absolute right-16 top-1/3">
+                    <div className="flex flex-col items-center">
+                      <div className="w-10 h-10 rounded-full border-2 border-black"></div>
+                      <div className="h-20 w-0.5 bg-black mx-auto"></div>
+                      <div className="w-12 rotate-45 h-0.5 bg-black absolute top-[58px] left-[13px]"></div>
+                      <div className="w-12 -rotate-45 h-0.5 bg-black absolute top-[58px] right-[13px]"></div>
+                      <div className="h-16 w-0.5 bg-black mx-auto"></div>
+                      <div className="w-8 rotate-30 h-0.5 bg-black absolute top-[95px] left-[10px]"></div>
+                      <div className="w-8 -rotate-30 h-0.5 bg-black absolute top-[95px] right-[10px]"></div>
+                      <div className="mt-2 text-center">Pet Owner</div>
+                    </div>
+                  </div>
+                  
+                  {/* Use Case: Browse Pets */}
+                  <div className="absolute left-[180px] top-[60px]">
+                    <div className="w-40 h-14 bg-yellow-100 border border-black rounded-full flex items-center justify-center">
+                      <span className="text-sm">Browse Pets</span>
+                    </div>
+                    <svg className="absolute -left-[75px] top-[20px]" width="75" height="10">
+                      <line x1="0" y1="5" x2="75" y2="5" stroke="black" strokeWidth="1" />
+                    </svg>
+                  </div>
+                  
+                  {/* Use Case: View Pet Details */}
+                  <div className="absolute left-[180px] top-[120px]">
+                    <div className="w-40 h-14 bg-yellow-100 border border-black rounded-full flex items-center justify-center">
+                      <span className="text-sm">View Pet Details</span>
+                    </div>
+                    <svg className="absolute -left-[75px] top-[20px]" width="75" height="10">
+                      <line x1="0" y1="5" x2="75" y2="5" stroke="black" strokeWidth="1" />
+                    </svg>
+                  </div>
+                  
+                  {/* Use Case: Save Favorites */}
+                  <div className="absolute left-[180px] top-[180px]">
+                    <div className="w-40 h-14 bg-yellow-100 border border-black rounded-full flex items-center justify-center">
+                      <span className="text-sm">Save Favorites</span>
+                    </div>
+                    <svg className="absolute -left-[75px] top-[20px]" width="75" height="10">
+                      <line x1="0" y1="5" x2="75" y2="5" stroke="black" strokeWidth="1" />
+                    </svg>
+                  </div>
+                  
+                  {/* Use Case: Submit Adoption */}
+                  <div className="absolute left-[180px] top-[240px]">
+                    <div className="w-40 h-14 bg-yellow-100 border border-black rounded-full flex items-center justify-center">
+                      <span className="text-sm">Submit Adoption Request</span>
+                    </div>
+                    <svg className="absolute -left-[75px] top-[20px]" width="75" height="10">
+                      <line x1="0" y1="5" x2="75" y2="5" stroke="black" strokeWidth="1" />
+                    </svg>
+                  </div>
+                  
+                  {/* Use Case: Contact Owner */}
+                  <div className="absolute left-[180px] top-[300px]">
+                    <div className="w-40 h-14 bg-yellow-100 border border-black rounded-full flex items-center justify-center">
+                      <span className="text-sm">Contact Pet Owner</span>
+                    </div>
+                    <svg className="absolute -left-[75px] top-[20px]" width="75" height="10">
+                      <line x1="0" y1="5" x2="75" y2="5" stroke="black" strokeWidth="1" />
+                    </svg>
+                  </div>
+                  
+                  {/* Central Use Case: Select Pet */}
+                  <div className="absolute left-[350px] top-[160px]">
+                    <div className="w-40 h-14 bg-yellow-100 border border-black rounded-full flex items-center justify-center z-10">
+                      <span className="text-sm">Select Pet</span>
+                    </div>
+                    
+                    {/* Include relationships */}
+                    <svg className="absolute top-[35px] -left-[130px]" width="130" height="100">
+                      <line x1="0" y1="25" x2="130" y2="0" stroke="black" strokeWidth="1" strokeDasharray="4" />
+                      <text x="50" y="30" className="text-[8px]">&lt;&lt;include&gt;&gt;</text>
+                    </svg>
+                    
+                    <svg className="absolute top-[55px] -left-[130px]" width="130" height="100">
+                      <line x1="0" y1="65" x2="130" y2="0" stroke="black" strokeWidth="1" strokeDasharray="4" />
+                      <text x="50" y="50" className="text-[8px]">&lt;&lt;include&gt;&gt;</text>
+                    </svg>
+                    
+                    <svg className="absolute top-[85px] -left-[130px]" width="130" height="100">
+                      <line x1="0" y1="95" x2="130" y2="0" stroke="black" strokeWidth="1" strokeDasharray="4" />
+                      <text x="50" y="70" className="text-[8px]">&lt;&lt;include&gt;&gt;</text>
+                    </svg>
+                  </div>
+                  
+                  {/* Use Case: List Pet */}
+                  <div className="absolute right-[180px] top-[120px]">
+                    <div className="w-40 h-14 bg-yellow-100 border border-black rounded-full flex items-center justify-center">
+                      <span className="text-sm">List Pet for Adoption</span>
+                    </div>
+                    <svg className="absolute -right-[75px] top-[20px]" width="75" height="10">
+                      <line x1="0" y1="5" x2="75" y2="5" stroke="black" strokeWidth="1" />
+                    </svg>
+                  </div>
+                  
+                  {/* Use Case: Update Pet Info */}
+                  <div className="absolute right-[180px] top-[180px]">
+                    <div className="w-40 h-14 bg-yellow-100 border border-black rounded-full flex items-center justify-center">
+                      <span className="text-sm">Update Pet Information</span>
+                    </div>
+                    <svg className="absolute -right-[75px] top-[20px]" width="75" height="10">
+                      <line x1="0" y1="5" x2="75" y2="5" stroke="black" strokeWidth="1" />
+                    </svg>
+                  </div>
+                  
+                  {/* Use Case: Manage Requests */}
+                  <div className="absolute right-[180px] top-[240px]">
+                    <div className="w-40 h-14 bg-yellow-100 border border-black rounded-full flex items-center justify-center">
+                      <span className="text-sm">Manage Adoption Requests</span>
+                    </div>
+                    <svg className="absolute -right-[75px] top-[20px]" width="75" height="10">
+                      <line x1="0" y1="5" x2="75" y2="5" stroke="black" strokeWidth="1" />
+                    </svg>
+                    
+                    {/* Include relationship to central use case */}
+                    <svg className="absolute top-[0px] -left-[130px]" width="130" height="100">
+                      <line x1="0" y1="0" x2="130" y2="80" stroke="black" strokeWidth="1" strokeDasharray="4" />
+                      <text x="30" y="50" className="text-[8px]">&lt;&lt;include&gt;&gt;</text>
+                    </svg>
+                  </div>
+                  
+                  {/* Use Case: Delete Pet */}
+                  <div className="absolute right-[180px] top-[300px]">
+                    <div className="w-40 h-14 bg-yellow-100 border border-black rounded-full flex items-center justify-center">
+                      <span className="text-sm">Delete Pet Listing</span>
+                    </div>
+                    <svg className="absolute -right-[75px] top-[20px]" width="75" height="10">
+                      <line x1="0" y1="5" x2="75" y2="5" stroke="black" strokeWidth="1" />
+                    </svg>
+                    
+                    {/* Include relationship to central use case */}
+                    <svg className="absolute top-[0px] -left-[130px]" width="130" height="100">
+                      <line x1="0" y1="0" x2="130" y2="140" stroke="black" strokeWidth="1" strokeDasharray="4" />
+                      <text x="30" y="70" className="text-[8px]">&lt;&lt;include&gt;&gt;</text>
+                    </svg>
+                  </div>
+                  
+                  {/* Use Case: Login */}
+                  <div className="absolute right-[180px] top-[60px]">
+                    <div className="w-40 h-14 bg-yellow-100 border border-black rounded-full flex items-center justify-center">
+                      <span className="text-sm">Login To System</span>
+                    </div>
+                    <svg className="absolute -right-[75px] top-[20px]" width="75" height="10">
+                      <line x1="0" y1="5" x2="75" y2="5" stroke="black" strokeWidth="1" />
+                    </svg>
+                    
+                    {/* Include relationship to central use case */}
+                    <svg className="absolute top-[50px] -left-[130px]" width="130" height="100">
+                      <line x1="0" y1="0" x2="130" y2="50" stroke="black" strokeWidth="1" strokeDasharray="4" />
+                      <text x="30" y="30" className="text-[8px]">&lt;&lt;include&gt;&gt;</text>
+                    </svg>
                   </div>
                 </div>
               </div>
