@@ -6,8 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FavoritesProvider } from "@/context/FavoritesContext";
 import { AuthProvider } from "@/context/AuthContext";
-import { NotificationProvider } from "@/context/NotificationContext";
-import React from "react"; // Add React import
+import React from "react";
 import Index from "./pages/Index";
 import Pets from "./pages/Pets";
 import PetDetails from "./pages/PetDetails";
@@ -23,33 +22,30 @@ import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
-// Fixed App component with proper provider hierarchy
 const App = () => (
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthProvider>
-          <NotificationProvider>
-            <FavoritesProvider>
-              <TooltipProvider>
-                <Toaster />
-                <SonnerToaster />
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/pets" element={<Pets />} />
-                  <Route path="/pets/:id" element={<PetDetails />} />
-                  <Route path="/favorites" element={<Favorites />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/auth" element={<Auth />} />
-                  <Route path="/adopt/:id" element={<AdoptionForm />} />
-                  <Route path="/list-pet" element={<ProtectedRoute><ListPet /></ProtectedRoute>} />
-                  <Route path="/my-pets" element={<ProtectedRoute><MyPets /></ProtectedRoute>} />
-                  <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </TooltipProvider>
-            </FavoritesProvider>
-          </NotificationProvider>
+          <FavoritesProvider>
+            <TooltipProvider>
+              <Toaster />
+              <SonnerToaster />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/pets" element={<Pets />} />
+                <Route path="/pets/:id" element={<PetDetails />} />
+                <Route path="/favorites" element={<Favorites />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/adopt/:id" element={<AdoptionForm />} />
+                <Route path="/list-pet" element={<ProtectedRoute><ListPet /></ProtectedRoute>} />
+                <Route path="/my-pets" element={<ProtectedRoute><MyPets /></ProtectedRoute>} />
+                <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </TooltipProvider>
+          </FavoritesProvider>
         </AuthProvider>
       </BrowserRouter>
     </QueryClientProvider>
