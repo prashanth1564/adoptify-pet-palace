@@ -1,4 +1,3 @@
-
 import React from 'react';
 import AppHeader from '@/components/AppHeader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -452,12 +451,12 @@ const Documentation = () => {
                 <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
                   <h3 className="text-lg font-medium mb-3 flex items-center gap-2">
                     <span className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-100">
-                      <span className="text-blue-700 font-bold">R</span>
+                      <span className="text-blue-700 font-bold">RN</span>
                     </span>
-                    React
+                    React Native
                   </h3>
                   <Separator className="mb-3" />
-                  <p className="text-sm text-muted-foreground">JavaScript library for building user interfaces, enabling component-based architecture for the application.</p>
+                  <p className="text-sm text-muted-foreground">Cross-platform mobile application framework that enables native mobile app development using React and JavaScript.</p>
                 </div>
                 
                 <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
@@ -468,7 +467,7 @@ const Documentation = () => {
                     TypeScript
                   </h3>
                   <Separator className="mb-3" />
-                  <p className="text-sm text-muted-foreground">Superset of JavaScript that adds static type definitions, enhancing code quality and developer experience.</p>
+                  <p className="text-sm text-muted-foreground">Superset of JavaScript that adds static type definitions, enhancing code quality and developer experience for mobile development.</p>
                 </div>
                 
                 <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
@@ -476,21 +475,10 @@ const Documentation = () => {
                     <span className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-100">
                       <span className="text-blue-700 font-bold">TW</span>
                     </span>
-                    Tailwind CSS
+                    NativeWind
                   </h3>
                   <Separator className="mb-3" />
-                  <p className="text-sm text-muted-foreground">Utility-first CSS framework that allows for rapid UI development with pre-built classes.</p>
-                </div>
-                
-                <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
-                  <h3 className="text-lg font-medium mb-3 flex items-center gap-2">
-                    <span className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-100">
-                      <span className="text-blue-700 font-bold">SC</span>
-                    </span>
-                    shadcn/ui
-                  </h3>
-                  <Separator className="mb-3" />
-                  <p className="text-sm text-muted-foreground">Component library built on top of Radix UI, providing accessible and customizable UI components.</p>
+                  <p className="text-sm text-muted-foreground">Tailwind CSS for React Native, bringing utility-first CSS styling to mobile applications with native performance.</p>
                 </div>
                 
                 <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
@@ -501,7 +489,7 @@ const Documentation = () => {
                     React Query
                   </h3>
                   <Separator className="mb-3" />
-                  <p className="text-sm text-muted-foreground">Data fetching library for React that simplifies server state management, caching, and updates.</p>
+                  <p className="text-sm text-muted-foreground">Data fetching library for React Native that simplifies server state management, caching, and updates in mobile apps.</p>
                 </div>
                 
                 <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
@@ -512,40 +500,51 @@ const Documentation = () => {
                     Supabase
                   </h3>
                   <Separator className="mb-3" />
-                  <p className="text-sm text-muted-foreground">Open-source Firebase alternative with PostgreSQL database, authentication, storage, and realtime features.</p>
+                  <p className="text-sm text-muted-foreground">Open-source Firebase alternative with PostgreSQL database, authentication, storage, and realtime features for mobile backends.</p>
                 </div>
                 
                 <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
                   <h3 className="text-lg font-medium mb-3 flex items-center gap-2">
                     <span className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-100">
-                      <span className="text-blue-700 font-bold">RR</span>
+                      <span className="text-blue-700 font-bold">RN</span>
                     </span>
-                    React Router
+                    React Navigation
                   </h3>
                   <Separator className="mb-3" />
-                  <p className="text-sm text-muted-foreground">Standard routing library for React that enables navigation between different components.</p>
+                  <p className="text-sm text-muted-foreground">Navigation library for React Native that provides stack, tab, and drawer navigation patterns for mobile apps.</p>
                 </div>
                 
                 <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
                   <h3 className="text-lg font-medium mb-3 flex items-center gap-2">
                     <span className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-100">
-                      <span className="text-blue-700 font-bold">V</span>
+                      <span className="text-blue-700 font-bold">E</span>
                     </span>
-                    Vite
+                    Expo
                   </h3>
                   <Separator className="mb-3" />
-                  <p className="text-sm text-muted-foreground">Modern frontend build tool that provides a faster and leaner development experience.</p>
+                  <p className="text-sm text-muted-foreground">Platform for universal React applications that provides tools and services for React Native development and deployment.</p>
                 </div>
                 
                 <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
                   <h3 className="text-lg font-medium mb-3 flex items-center gap-2">
                     <span className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-100">
-                      <span className="text-blue-700 font-bold">Z</span>
+                      <span className="text-blue-700 font-bold">AS</span>
                     </span>
-                    Zod
+                    AsyncStorage
                   </h3>
                   <Separator className="mb-3" />
-                  <p className="text-sm text-muted-foreground">TypeScript-first schema validation library for form validation and data parsing.</p>
+                  <p className="text-sm text-muted-foreground">Asynchronous, persistent, key-value storage system for React Native applications, used for local data persistence.</p>
+                </div>
+                
+                <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
+                  <h3 className="text-lg font-medium mb-3 flex items-center gap-2">
+                    <span className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-100">
+                      <span className="text-blue-700 font-bold">RHF</span>
+                    </span>
+                    React Hook Form
+                  </h3>
+                  <Separator className="mb-3" />
+                  <p className="text-sm text-muted-foreground">Performant forms library for React Native with easy validation and minimal re-renders for mobile form handling.</p>
                 </div>
               </div>
             </section>
