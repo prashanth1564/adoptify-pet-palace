@@ -1,3 +1,4 @@
+
 import React from 'react';
 import AppHeader from '@/components/AppHeader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -475,10 +476,10 @@ const Documentation = () => {
                     <span className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-100">
                       <span className="text-blue-700 font-bold">TW</span>
                     </span>
-                    NativeWind
+                    Tailwind CSS
                   </h3>
                   <Separator className="mb-3" />
-                  <p className="text-sm text-muted-foreground">Tailwind CSS for React Native, bringing utility-first CSS styling to mobile applications with native performance.</p>
+                  <p className="text-sm text-muted-foreground">Utility-first CSS framework that provides low-level utility classes to build custom designs directly in your markup.</p>
                 </div>
                 
                 <div className="border p-4 rounded-lg bg-white dark:bg-gray-800">
